@@ -28,14 +28,14 @@
             </div>
 
         </li>
-        <li><a href="studentlogin.html">SIGN IN</a></li>
+        <li><a href="studentlogin.html">STUDENT SIGN IN</a></li>
       </ul>
     </div>
   </nav>
   <div class="container">
     <div class="wrapper">
       <div>
-        <h2 align="center">STUDENT REGISTER</h2>
+        <h2 align="center">FACULTY REGISTER</h2>
         <form id="registerForm" onsubmit="handleSubmit(event)">
           <label for="registerUsername" class="cont">Username:</label>
           <input type="text" id="registerUsername" name="username" required  class="cont"><br>
@@ -62,7 +62,7 @@
     const password = formData.get('password');
     console.log('U P', username, password)
     // Example: Send form data to a server
-    fetch('http://localhost:5000/sregister', {
+    fetch('http://localhost:5000/fregister', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

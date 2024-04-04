@@ -6,12 +6,12 @@ const pool = require("./db");
 app.use(cors());
 app.use(express.json());
 //await pool.connect();
-app.listen(5000, () =>
+app.listen(5003, () =>
 {
     console.log("listening to Sid's port 5000");
 });
 
-app.post("/register", async(req,res)=>{
+app.post("/sregister", async(req,res)=>{
     console.log('Hello');
     console.log('desc ',req.body);
     try {
@@ -23,7 +23,62 @@ app.post("/register", async(req,res)=>{
         console.log(error.message);
     }
     res.send("user successfully registered");
+}),
+
+
+    app.post("/ssignin", async (req, res) => {
+        try {
+            const { username, password } = req.body;
+            
+            // Query the database to find a user with the provided username and password
+            const newuser = await pool.query("SELECT * FROM auth WHERE name = $1 AND password = $2", [username, password]);
+            
+            if (newuser.rows.length === 0) {
+                // No user found with the provided credentials
+                return res.status(401).json({ error: "Invalid username or password" });
+            }
+            
+            // User authenticated successfully
+            res.status(200).json({ message: "Sign-in successful", newuser: newuser.rows[0] });
+        } catch (error) {
+            console.error("Error signing in:", error.message);
+            res.status(500).json({ error: "Internal Server Error" });
+        }
+}),
+app.post("/fregister", async(req,res)=>{
+    console.log('desc ',req.body);
+    try {
+        const {username, password} = req.body;
+        console.log(username);// name is username, email is password
+        const newuser = await pool.query("INSERT INTO teach Values($1,$2)",[username,password]);
+        res.status(200);
+    } catch (error) {
+        console.log(error.message);
+    }
+    res.send("user successfully registered");
+}),
+app.post("/fsignin", async (req, res) => {
+    try {
+        const { username, password } = req.body;
+        
+        // Query the database to find a user with the provided username and password
+        const newuser = await pool.query("SELECT * FROM teach WHERE username = $1 AND password = $2", [username, password]);
+        
+        if (newuser.rows.length === 0) {
+            // No user found with the provided credentials
+            return res.status(401).json({ error: "Invalid username or password" });
+        }
+        
+        // User authenticated successfully
+        res.status(200).json({ message: "Sign-in successful", newuser: newuser.rows[0] });
+    } catch (error) {
+        console.error("Error signing in:", error.message);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
 });
+// app.listen(5003, () =>{
+//     console.log("Server is running");
+// });
 
 
 
