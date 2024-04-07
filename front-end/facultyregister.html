@@ -37,6 +37,8 @@
       <div>
         <h2 align="center">FACULTY REGISTER</h2>
         <form id="registerForm" onsubmit="handleSubmit(event)">
+          <label for="registerFID" class="cont">Faculty ID:</label>
+          <input type="text" id="registerFID" name="fid" required class="cont"><br>
           <label for="registerUsername" class="cont">Username:</label>
           <input type="text" id="registerUsername" name="username" required  class="cont"><br>
           <label for="registerPassword"  class="cont">Password:</label>
@@ -58,16 +60,17 @@
     console.log('req sent');
     // Get form data
     const formData = new FormData(event.target);
+    const facultyId = formData.get('fid');
     const username = formData.get('username');
     const password = formData.get('password');
     console.log('U P', username, password)
     // Example: Send form data to a server
-    fetch('http://localhost:5000/fregister', {
+    fetch('http://localhost:5003/fregister', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ username, password })
+      body: JSON.stringify({ facultyId, username, password })
     });
     //   .then(response => response.json())
     //   .then(data => {

@@ -45,24 +45,28 @@ app.post("/sregister", async(req,res)=>{
             res.status(500).json({ error: "Internal Server Error" });
         }
 }),
+
+
 app.post("/fregister", async(req,res)=>{
     console.log('desc ',req.body);
     try {
-        const {username, password} = req.body;
+        const {facultyId, username, password} = req.body;
         console.log(username);// name is username, email is password
-        const newuser = await pool.query("INSERT INTO teach Values($1,$2)",[username,password]);
+        const newuser = await pool.query("INSERT INTO teach Values($1,$2,$3)",[username,password,facultyId]);
         res.status(200);
     } catch (error) {
         console.log(error.message);
     }
     res.send("user successfully registered");
 }),
+
+
 app.post("/fsignin", async (req, res) => {
     try {
-        const { username, password } = req.body;
+        const { facultyId, username, password } = req.body;
         
         // Query the database to find a user with the provided username and password
-        const newuser = await pool.query("SELECT * FROM teach WHERE username = $1 AND password = $2", [username, password]);
+        const newuser = await pool.query("SELECT * FROM teach WHERE username = $1 AND password = $2 AND fid = $3", [username, password,facultyId]);
         
         if (newuser.rows.length === 0) {
             // No user found with the provided credentials
@@ -75,10 +79,52 @@ app.post("/fsignin", async (req, res) => {
         console.error("Error signing in:", error.message);
         res.status(500).json({ error: "Internal Server Error" });
     }
-});
-// app.listen(5003, () =>{
-//     console.log("Server is running");
-// });
+}),
+app.post("/update-timings", async (req, res) => {
+    try {
+      const { facultyId, dayOfWeek, startTime, endTime } = req.body;
+  
+      // Get current time
+      const currentTime = new Date();
+  
+      // Insert or update the timings in the database
+      const result = await pool.query(
+        `INSERT INTO faculty_schedule (fid, day_of_week, start_time, end_time, updated_at)
+         VALUES ($1, $2, $3, $4, $5)
+         ON CONFLICT (fid, day_of_week)
+         DO UPDATE SET start_time = $3, end_time = $4, updated_at = $5`,
+        [facultyId, dayOfWeek, startTime, endTime, currentTime]
+      );
+  
+      res.status(200).send("Timings updated successfully");
+    } catch (error) {
+      console.error("Error updating timings:", error);
+      res.status(500).send("Internal Server Error");
+    }
+}),
+
+app.put("/update-existing-timings", async (req, res) => {
+    try {
+      const { facultyId, dayOfWeek, startTime, endTime } = req.body;
+  
+      // Get current time
+      const currentTime = new Date();
+  
+      // Update the timings in the database
+      const result = await pool.query(
+        `UPDATE faculty_schedule
+         SET start_time = $1, end_time = $2, updated_at = $3
+         WHERE fid = $4 AND day_of_week = $5`,
+        [startTime, endTime, currentTime, facultyId, dayOfWeek]
+      );
+  
+      res.status(200).send("Existing timings updated successfully");
+    } catch (error) {
+      console.error("Error updating existing timings:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  });
+
 
 
 

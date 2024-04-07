@@ -36,6 +36,9 @@
     <div>
       <h2 align="center">FACULTY LOGIN</h2>
       <form id="loginForm" onsubmit="handleSubmit(event)">
+
+        <label for="registerFID" class="cont">Faculty ID:</label>
+        <input type="text" id="registerFID" name="fid" required class="cont"><br>
         <label for="registerUsername" class="cont">Username:</label>
         <input type="text" id="registerUsername" name="username" required  class="cont"><br>
         <label for="registerPassword"  class="cont">Password:</label>
@@ -53,6 +56,7 @@
     
     // Get form data
     const formData = new FormData(event.target);
+    const facultyId = formData.get('fid');
     const username = formData.get('username');
     const password = formData.get('password');
     
@@ -62,13 +66,14 @@
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ username, password })
+      body: JSON.stringify({ facultyId, username, password })
     })
     .then(response => {
       if (response.ok) {
         // Optionally, display a success message or redirect to another page
         console.log('Login successful');
-        window.location.href ='search.html';
+        console.log('Username:', username);
+        window.location.href = `facultyinsert.html?facultyId=${facultyId}`;
       } else {
         // Optionally, display an error message to the user
         console.error('Login failed');

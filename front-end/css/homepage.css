@@ -11,6 +11,15 @@ body {
     );
     overflow: hidden;
 }
+@font-face {
+  font-family:'A1' ;
+  src: url('/meow1/front-end/fonts/archare.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'A2';
+  src: url('/meow1/front-end/fonts/SEASRN__.ttf') format('truetype');
+}
+
 
 header {
     background-color: #333;
@@ -71,7 +80,7 @@ header {
   
   .phone {
     color: #fffcff;
-    font-size: 2.5vh;
+    font-size: 2vh;
   }
   
   .dropdown-content {
@@ -102,5 +111,38 @@ header {
   
 
   
+  .content{
+    font-family: 'A1';
+    position:relative;
+    font-weight: 1000;
+    font-size: 129px;
+    color: #050a3f;
+    top: 100px;
   
+  }
+  .welcome{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    position:relative;
+    font-weight: 400;
+    font-size: 49px;
+    color: #33c2de;
+    top: 200px;
+    left: 200px;
+  
+  }
+ 
+  @keyframes flyIn {
+    0% {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .content {
+    animation: flyIn 1s ease-out; /* Apply the animation to the "LOCATE YOUR PROFESSOR" heading */
+  }
 
