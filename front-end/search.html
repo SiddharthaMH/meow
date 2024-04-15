@@ -8,22 +8,18 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Professor Details Form</title>
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="stylesheet" type="text/css" href="css/search.css">
 
 </head>
 
 <body>
-    <div class="headd">
-        <h2>
-            LOCATE YOUR PROFESSOR
-        </h2>
-    </div>
+    
     <div class="menu-bar">
         
         <ul>
-            <li><a href="mainwebpage.html">Home</a></li>
+            <li><a href="homepage.html">Home</a></li>
             <li><a href="aboutus.html">About us</a></li>
-            <li><a href="login.html">Management</a></li>
+           
             <li class="dropdown">
                 <a href="#" class="contact-link">Get In Touch</a>
                 <div class="dropdown-content">
@@ -44,16 +40,68 @@
         <form action="http://localhost:5003/api/submit" method="post"> <!-- Specify the backend endpoint -->
             <div class="form-group">
                 <label for="professor_name">Professor Name:</label>
-                <input type="text" id="professor_name" name="professor_name" oninput="clearRoomNo()">
-            </div> <div class="forgot">
+                <select id="professor_name" name="professor_name">
+                    <option value="DR. SMITHA N.PAI">DR. SMITHA N.PAI</option>
+                    <option value="DR. MANOHARA PAI M.M">DR. MANOHARA PAI M.M</option>
+                    <option value="DR. BALACHANDRA">DR. BALACHANDRA</option>
+                    <option value="DR. PREETHAM KUMAR">DR. PREETHAM KUMAR</option>
+                    <option value="DR. MANJULA SHENOY K.">DR. MANJULA SHENOY K.</option>
+                    <option value="DR. SANJAY SINGH">DR. SANJAY SINGH</option>
+                    <option value="DR. AJITHA SHENOY">DR. AJITHA SHENOY</option>
+                    <option value="DR. POORNALATHA G">DR. POORNALATHA G</option>
+                    <option value="DR. CHANDRAKALA  C.B">DR. CHANDRAKALA C.B</option>
+                    <option value="DR. SANTHOSHA RAO">DR. SANTHOSHA RAO</option>
+                    <option value="DR. RAGHAVENDRA ACHAR">DR. RAGHAVENDRA ACHAR</option>
+                    <option value="DR. SUCHETA KOLEKAR">DR. SUCHETA KOLEKAR</option>
+                    <option value="DR. RASHMI NAVEEN RAJ">DR. RASHMI NAVEEN RAJ</option>
+                    <option value="DR. K. KRISHNA PRAKASHA">DR. K. KRISHNA PRAKASHA</option>
+                    <option value="DR. SUMITH N.">DR. SUMITH N.</option>
+                    <option value="DR. GIRIJA  V. ATTIGERI">DR. GIRIJA V. ATTIGERI</option>
+                    <option value="DR. ADESH N.D.">DR. ADESH N.D.</option>
+                    <option value="DR. SANTHOSH KAMATH">DR. SANTHOSH KAMATH</option>
+                    <option value="Dr. V. SIVAKUMAR">Dr. V. SIVAKUMAR</option>
+                    <option value="DR. DIANA OLIVIA">DR. DIANA OLIVIA</option>
+                    <option value="Dr. RAGHAVENDRA S.">Dr. RAGHAVENDRA S.</option>
+                    <option value="DR. VEENA MAYYA">DR. VEENA MAYYA</option>
+                    <option value="DR. MANJULA C. B.">DR. MANJULA C. B.</option>
+                    <option value="MR.GHANASHYAMA PRABHU">MR.GHANASHYAMA PRABHU</option>
+                    <option value="MRS. DIVYA S.">MRS. DIVYA S.</option>
+                    <option value="MRS. ANURADHA RAO">MRS. ANURADHA RAO</option>
+                    <option value="DR.RAGHAVENDRA GANIGA">DR.RAGHAVENDRA GANIGA</option>
+                    <option value="MR. AKSHAY K C">MR. AKSHAY K C</option>
+                    <option value="MRS. VEENA  K M">MRS. VEENA K M</option>
+                    <option value="DR. RAVIRAJ HOLLA">DR. RAVIRAJ HOLLA</option>
+                    <option value="MRS. SANGEETHA T.S.">MRS. SANGEETHA T.S.</option>
+                    <option value="MS. CHETANA PUJARI">MS. CHETANA PUJARI</option>
+                    <option value="MR. CHETHAN SHARMA">MR. CHETHAN SHARMA</option>
+                    <option value="DR. NISHA  P. SHETTY">DR. NISHA P. SHETTY</option>
+                    <option value="DR. S.KALIRAJ">DR. S.KALIRAJ</option>
+                    <option value="MRS. VIBHA">MRS. VIBHA</option>
+                    <option value="MRS. POOJA S.">MRS. POOJA S.</option>
+                    <option value="MS. SWATHI B.P.">MS. SWATHI B.P.</option>
+                    <option value="MRS.ANUSHA HEGDE">MRS.ANUSHA HEGDE</option>
+                    <option value="Dr. DIVYA RAO">Dr. DIVYA RAO</option>
+                    <option value="MR. ARJUN C. V">MR. ARJUN C. V</option>
+                    <option value="MRS. JAYASHREE">MRS. JAYASHREE</option>
+                    <option value="DR. SAMEENA BEGUM PATHAN">DR. SAMEENA BEGUM PATHAN</option>
+                    <option value="MS. RAMYASHREE">MS. RAMYASHREE</option>
+                    <option value="DR.SATYAJIT MAHAPATRA">DR.SATYAJIT MAHAPATRA</option>
+                    <option value="DR. PANKAJ KUMAR">DR. PANKAJ KUMAR</option>
+                    <option value="DR.MANOJ TOLANI">DR.MANOJ TOLANI</option>
+                    <option value="DR. RITESH SHARMA">DR. RITESH SHARMA</option>
+                    <option value="Mrs. Ramya D Shetty">Mrs. Ramya D Shetty</option>
+                    <option value="Mrs. Swathi Prabhu">Mrs. Swathi Prabhu</option>
+                </select>
+            </div>
+            <div class="forgot">
                 <br>
                 <a class="forgot" href="forgot_password.html">Don't know 😂</a> <!-- Link to Forgot Password page -->
                 <br>
             </div>
             <br>
             <input type="submit" value="Submit">
+        </form>
         
-    </form>
 </div>
 
 

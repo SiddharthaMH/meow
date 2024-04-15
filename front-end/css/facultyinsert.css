@@ -1,23 +1,18 @@
 
 body {
-  background: linear-gradient(-45deg, #e3623b, #df1b1b, #2091ba, #15b48f,#e3623b);
-  background-size: 400% 400%;
-  animation: gradient 10s ease infinite;
-  height: 100vh;
+  min-height: 99vh;
+  background: rgb(253, 219, 218);
+  background: linear-gradient(0deg, rgb(0, 0, 0) 20%, rgb(216 145 17) 58%, rgb(136 23 23) 98%);
   overflow: hidden;
-  }
-  
-  @keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-  }
+}
+@font-face {
+  font-family:'A1' ;
+  src: url('/front-end/fonts/Dune_Rise.ttf') format('truetype');
+}
+
+
+
+
   .user-icon img {
     width: 40px; /* Adjust width as needed */
     height: 40px; /* Adjust height as needed */

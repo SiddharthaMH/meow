@@ -1,15 +1,17 @@
+
 body {
-    min-height: 97vh;
-    background: rgb(253, 219, 218);
-    background: linear-gradient(
-      0deg,
-      rgb(0, 0, 0) 20%,
-      rgb(173, 40, 40) 58%,
-      rgb(23, 36, 136) 98%
-    );
-  }
+  min-height: 99vh;
+  background: rgb(253, 219, 218);
+  background: linear-gradient(0deg, rgb(0, 0, 0) 20%, rgb(216 145 17) 58%, rgb(136 23 23) 98%);
+  overflow: hidden;
+}
+@font-face {
+  font-family:'A1' ;
+  src: url('/front-end/fonts/Dune_Rise.ttf') format('truetype');
+}
   .menu-bar {
     display: flex;
+    font-family:'A1';
     top: 0px;
     left: 0%;
     background-color: rgba(10, 9, 7, 0);
@@ -26,6 +28,7 @@ body {
   .menu-bar ul li {
     display: inline-block;
     margin-right: 1vw;
+    
   }
   
   .menu-bar ul li:last-child {

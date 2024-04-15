@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Professors and Cabin Numbers</title>
+  <style>
+   body {
+  min-height: 99vh;
+  background: rgb(253, 219, 218);
+  background: linear-gradient(0deg, rgb(0, 0, 0) 20%, rgb(216 145 17) 58%, rgb(136 23 23) 98%);
+  overflow: hidden;
+}
+@font-face {
+  font-family:'A1' ;
+  src: url('/front-end/fonts/Dune_Rise.ttf') format('truetype');
+}
+    /* Centering the h1 */
+    h1 {
+      text-align: center;
+      margin-top: 80px; /* Adjusted margin-top */
+      font-size: 36px; /* Increased font size */
+      font-family: 'YourFontName', sans-serif; /* Replace 'YourFontName' with the font you imported */
+    }
+
+    /* Styling the table */
+    table {
+      width: 80%;
+      margin: 50px auto 20px; /* Adjusted margin to move the table down */
+      border-collapse: collapse;
+      border: 2px solid #333;
+    }
+
+    /* Styling table headers */
+    th {
+      background-color: #f2f2f2;
+      padding: 10px;
+      text-align: left;
+      border: 1px solid #333;
+    }
+
+    /* Styling table data cells */
+    td {
+      padding: 10px;
+      border: 1px solid #333;
+    }
+
+    /* Styling odd rows */
+    tr:nth-child(odd) {
+      background-color: #e9e9e9;
+    }
+
+    /* Styling the photo container */
+    .photo-container {
+      text-align: center;
+      margin-top: 20px; /* Adjusted margin to add space between table and image */
+    }
+
+    /* Styling the placeholder photo */
+    .photo-container img {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+  <h1 align="center">Professors and Cabin Numbers</h1>
+  
+  <table id="professorData">
+    <thead>
+      <tr>
+        <th>Professor Name</th>
+        <th>Cabin Number</th>
+        <th>Department</th>
+        <th>Email</th>
+        <th>Floor</th>
+        <th>Block</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Data will be dynamically inserted here -->
+    </tbody>
+  </table>
+
+  <!-- Inserted div for the image -->
+  <div class="photo-container">
+    <img src="http://localhost:3000/images/manipallogo.jpg" alt="Your Image" id="placeholder-photo">
+  </div>
+</body>
+</html>
