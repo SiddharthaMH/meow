@@ -1,106 +1,206 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/meow-amrith/front-end/css/stylesaboutus.css">
-    <title>Our Team</title>
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>Professor Details Form</title>
+    <style>
+        body {
+            min-height: 99vh;
+            background: rgb(126, 187, 199);
+            
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            
+        }
 
+        .content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            
+
+        }
+
+        .form {
+   
+    padding: 20px;
+    border-radius: 10px;
+    background-color: white;
+    width: 50%;
+
+}
+.demo1{
+    display: flex;
+    width: 600px;
+}
+
+
+        label {
+            font-weight: bold;
+        }
+
+       
+
+        input[type="submit"] {
+            display: block;
+            width: 10%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        /* Center the icon vertically and horizontally */
+button[type="submit"] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px; /* Adjust width as needed */
+    height: 40px; /* Adjust height as needed */
+    border: none;
+    font-size: 25px;
+    background-color: transparent; /* Transparent background */
+    cursor: pointer;
+    transition: all 0.3s ease; /* Smooth transition for hover effect */
+}
+
+/* Increase button width and change color on hover */
+button[type="submit"]:hover {
+   
+    color: #007bff; /* Change color on hover */
+}
+
+    </style>
 </head>
 
 <body>
-    <header class="menu-bar">
-        <nav>
-            <div class="menu-bar">
-                <ul>
-                    <li><a href="mainwebpage.html">Home</a></li>
-                    <li><a href="aboutus.html">About us</a></li>
-                    <li><a href="login.html">Management</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="contact-link">Get In Touch</a>
-                        <div class="dropdown-content">
-                            <div class="dropdown-content">
-                                <a href="mailto:amrithshet@icloud.com">Email: amrithshet@icloud.com</a>
-                                <p class="phone">Phone: +91 6363531509</p>
-                                <a href="https://maps.app.goo.gl/hfHu8WZr4VwQta9r6">Address: Mangaluru, Karnataka
-                                    575002</a>
-                            </div>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </header>
+    <div class="content">
+        <!-- Form to select professor name -->
+        <form id="professorForm" class="demo1">
+            <input list="professor_names" id="professor_name" name="professor_name" placeholder="Type or select professor name" class="demo1">
+        <datalist id="professor_names" >
+                <!-- Add options for professor names here -->
+                <option value="Smitha N.Pai">DR. SMITHA N.PAI</option>
+<option value="Manohara Pai M.M">DR. MANOHARA PAI M.M</option>
+<option value="Balachandra">DR. BALACHANDRA</option>
+<option value="Preetham Kumar">DR. PREETHAM KUMAR</option>
+<option value="Manjula Shenoy K.">DR. MANJULA SHENOY K.</option>
+<option value="Sanjay Singh">DR. SANJAY SINGH</option>
+<option value="Ajitha Shenoy">DR. AJITHA SHENOY</option>
+<option value="Poornalatha G">DR. POORNALATHA G</option>
+<option value="Chandrakala C.B">DR. CHANDRAKALA C.B</option>
+<option value="Santhosha Rao">DR. SANTHOSHA RAO</option>
+<option value="Raghavendra Achar">DR. RAGHAVENDRA ACHAR</option>
+<option value="Sucheta Kolekar">DR. SUCHETA KOLEKAR</option>
+<option value="Rashmi Naveen Raj">DR. RASHMI NAVEEN RAJ</option>
+<option value="K. Krishna Prakasha">DR. K. KRISHNA PRAKASHA</option>
+<option value="Sumith N.">DR. SUMITH N.</option>
+<option value="Girija V. Attigeri">DR. GIRIJA V. ATTIGERI</option>
+<option value="Adesh N.D.">DR. ADESH N.D.</option>
+<option value="Santhosh Kamath">DR. SANTHOSH KAMATH</option>
+<option value="V. Sivakumar">Dr. V. SIVAKUMAR</option>
+<option value="Diana Olivia">DR. DIANA OLIVIA</option>
+<option value="Raghavendra S.">Dr. RAGHAVENDRA S.</option>
+<option value="Veena Mayya">DR. VEENA MAYYA</option>
+<option value="Manjula C. B.">DR. MANJULA C. B.</option>
+<option value="Ghanashyama Prabhu">MR. GHANASHYAMA PRABHU</option>
+<option value="Divya S.">MRS. DIVYA S.</option>
+<option value="Anuradha Rao">MRS. ANURADHA RAO</option>
+<option value="Raghavendra Ganiga">DR. RAGHAVENDRA GANIGA</option>
+<option value="Akshay K C">MR. AKSHAY K C</option>
+<option value="Mrs. Veena K M">MRS. VEENA K M</option>
+<option value="Raviraj Holla">DR. RAVIRAJ HOLLA</option>
+<option value="Sangeetha T.S.">MRS. SANGEETHA T.S.</option>
+<option value="Chetana Pujari">MS. CHETANA PUJARI</option>
+<option value="Chethan Sharma">MR. CHETHAN SHARMA</option>
+<option value="Nisha P. Shetty">DR. NISHA P. SHETTY</option>
+<option value="S.Kaliraj">DR. S.KALIRAJ</option>
+<option value="Vibha">MRS. VIBHA</option>
+<option value="Pooja S.">MRS. POOJA S.</option>
+<option value="Swathi B.P.">MS. SWATHI B.P.</option>
+<option value="Anusha Hegde">MRS.ANUSHA HEGDE</option>
+<option value="Divya Rao">Dr. DIVYA RAO</option>
+<option value="Arjun C. V">MR. ARJUN C. V</option>
+<option value="Jayashree">MRS. JAYASHREE</option>
+<option value="Sameena Begum Pathan">DR. SAMEENA BEGUM PATHAN</option>
+<option value="Ms. Ramyashree">MS. RAMYASHREE</option>
+<option value="Satyajit Mahapatra">DR.SATYAJIT MAHAPATRA</option>
+<option value="Pankaj Kumar">DR. PANKAJ KUMAR</option>
+<option value="Manoj Tolani">DR.MANOJ TOLANI</option>
+<option value="Ritesh Sharma">DR. RITESH SHARMA</option>
+<option value="Ramya D Shetty">Mrs. Ramya D Shetty</option>
+<option value="Swathi Prabhu">Mrs. Swathi Prabhu</option>
 
-    <main>
-        <h1 class="header">LOCATE YOUR PROFESSOR</h1>
-        <section id="team-section">
-            <div class="team-member">
-                <div class="xyz">
-                    <br>
-                    <img src="images/logo2.jpg" alt="Team member 1">
-                </div>
-                <div class="team-info">
-                    <h2>AMRITH</h2>
-                    <p>
-                        Amrith J Shet, a dynamic second-year IT engineering student at MIT Manipal, is driven by an
-                        insatiable curiosity for technology and innovation. With a keen eye for detail and a passion for
-                        problem-solving, Amrith embodies the spirit of a budding entrepreneur. His journey in
-                        engineering has been marked by a relentless pursuit of knowledge and a determination to make a
-                        difference in the world of technology. Beyond the realms of academia, Amrith is an avid coder,
-                        constantly exploring new programming languages and techniques to sharpen his skills. His
-                        fascination with artificial intelligence and machine learning fuels his ambition to
-                        revolutionize the tech industry. Outside of the digital world, Amrith finds solace in the rhythm
-                        of nature, often venturing into the outdoors for hiking and photography. A fervent advocate for
-                        community engagement, he actively participates in volunteer initiatives, leveraging his
-                        technical expertise to empower others. With a blend of technical prowess and a creative mindset,
-                        Amrith envisions a future where innovation knows no bounds, and he is determined to leave an
-                        indelible mark on the world through his entrepreneurial
-                        endeavors.<br><br><br><br><br><br><br><br><br><br><br><br><br></p>
-                </div>
-            </div>
-            <div class="team-member">
-                <div class="xyzz">
-                    <img src="images/logo2.jpg" alt="Team member 2">
-                </div>
+                <!-- Add more options as needed -->
+            </datalist>
+            <button type="submit"><i class="fas fa-search"></i></button>
+        </form>
+    </div>
 
-                <div class="team-info">
-                    <h2>SIDDARTHA M H</h2>
-                    <p>Siddartha M H, a dynamic sophomore pursuing IT engineering at MIT Manipal, embodies a fervent
-                        enthusiasm for technological exploration. His journey in engineering is characterized by an
-                        unwavering dedication to pushing boundaries and unraveling the complexities of modern
-                        technology. With a penchant for precision and a knack for problem-solving, Siddartha is poised
-                        to make a lasting impact in the realm of innovation. Beyond his academic pursuits, Siddartha is
-                        an ardent coder, continuously seeking to expand his repertoire of programming languages and
-                        techniques. His fascination with emerging technologies, particularly in the fields of artificial
-                        intelligence and data analytics, drives his ambition to shape the future of tech. Outside the
-                        digital domain, Siddartha finds inspiration in the great outdoors, often immersing himself in
-                        nature through hiking and adventure sports. Committed to giving back to his community, he
-                        actively engages in volunteer work, leveraging his technical expertise to empower others. With a
-                        unique blend of technical acumen and creative ingenuity, Siddartha envisions a world where
-                        innovation flourishes boundlessly, and he is determined to carve out a distinctive path through
-                        his entrepreneurial
-                        pursuits.<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-                    </p>
-                </div>
-            </div>
-        </section>
-        <div class="sidebar">
-            <h3>Follow Us On Instagram</h3>
-            <ul class="social-icons">
-                <li><a href="https://www.instagram.com/_amrith_25/"><i class="fab fa-instagram"></i> @amrith_25</a></li>
-                <li><a href="https://www.instagram.com/siddh.artha_m_h/"><i class="fab fa-instagram"></i>
-                        @siddh.artha_m_h</a></li>
-                        <br><br><br><br>
+    <!-- Script to handle form submission -->
+    <script>
+        // Function to handle form submission
+        document.getElementById('professorForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent form submission
 
-            </ul>
-        </div>
-    </main>
-    <br>
-    <br>
-    <br><br><br><br>
-    <script src="app.js"></script>
+            // Get selected professor name
+            const professorName = document.getElementById('professor_name').value;
+
+            // Redirect to display page with selected faculty name
+            window.location.href = `display.html?facultyName=${encodeURIComponent(professorName)}`;
+        });
+    </script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
 </body>
 
 </html>

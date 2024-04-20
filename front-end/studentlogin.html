@@ -17,6 +17,7 @@
         <li><a href="studentlogin.html">ABOUT US</a></li>
         <li><a href="facultyregister.html">FACULTY REGISTER</a></li>
         
+        
         <li class="dropdown">
           <a href="#" class="contact-link">GET IN TOUCHE</a>
           <div class="dropdown-content">
@@ -68,7 +69,7 @@
       if (response.ok) {
         // Optionally, display a success message or redirect to another page
         console.log('Login successful');
-        window.location.href ='search.html';
+        window.location.href = `search.html?username=${username}`;
       } else {
         // Optionally, display an error message to the user
         console.error('Login failed');

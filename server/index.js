@@ -2,10 +2,13 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const pool = require("./db");
+const multer = require('multer');
 
 app.use(cors());
 app.use(express.json());
 //await pool.connect();
+const upload = multer({ dest: 'uploads/' }); 
+
 app.listen(5003, () =>
 {
     console.log("listening to Sid's port 5000");
@@ -154,7 +157,81 @@ app.put("/update-existing-timings", async (req, res) => {
         console.error("Error updating live status:", error.message);
         res.status(500).send("Internal Server Error: " + error.message); // Add error message to response
     }
+}),
+app.post('/upload', upload.single('image'), async (req, res) => {
+    try {
+      // Read the uploaded image file
+      const imageBuffer = req.file.buffer;
+  
+      // Extract faculty_id from the request body
+      const facultyId = req.body.faculty_id;
+  
+      // Insert image data into the database
+      await pool.query('UPDATE faculty SET image_data = $1 WHERE faculty_id = $2', [imageBuffer, facultyId]);
+  
+      res.send('Image uploaded successfully.');
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+  
+  
+ 
+
+  app.get('/get-live-status', async (req, res) => {
+    try {
+        const { facultyName } = req.query;
+
+        // Retrieve live status and cabin details from the database for the specified faculty name
+        const result = await pool.query(`
+            SELECT f.fname, f.femail, f.fdept, f.live_status, c.fblock, c.ffloor, c.fcabinno
+            FROM faculty f
+            JOIN cabin c ON f.fid = c.fid
+            WHERE f.fname = $1
+        `, [facultyName]);
+
+        if (result.rows.length === 0) {
+            // Faculty member not found
+            return res.status(404).json({ error: 'Faculty member not found' });
+        }
+
+        const { fname, femail, fdept, live_status, fblock, ffloor, fcabinno } = result.rows[0];
+        res.status(200).json({ fname, femail, fdept, live_status, fblock, ffloor, fcabinno });
+    } catch (error) {
+        console.error('Error retrieving live status:', error.message);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}),
+// Endpoint to fetch faculty details
+app.get('/get-faculty-details', async (req, res) => {
+    try {
+        const { facultyId } = req.query;
+
+        // Retrieve faculty details including cabin number and block from the database
+        const result = await pool.query(`
+            SELECT f.fname, f.femail, f.fdept, f.live_status, c.fblock, c.ffloor, c.fcabinno
+            FROM faculty f
+            JOIN cabin c ON f.fid = c.fid
+            WHERE f.fid = $1
+        `, [facultyId]);
+
+        if (result.rows.length === 0) {
+            // Faculty not found
+            return res.status(404).json({ error: 'Faculty not found' });
+        }
+
+        const facultyDetails = result.rows[0];
+        res.status(200).json(facultyDetails);
+    } catch (error) {
+        console.error('Error fetching faculty details:', error.message);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 });
+
+
+
+
 
 
 

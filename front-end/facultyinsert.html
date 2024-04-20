@@ -69,9 +69,7 @@
             <button class="submitComment" type="button" onclick="submitComment()">Submit Comment</button><br><br>
     
             <!-- Hidden field to store the username -->
-            <input type="hidden" id="hiddenFacultyId" name="facultyId" value="2">
-            <label for="liveStatus">Live Status:</label>
-            <input type="checkbox" id="liveStatus" onclick="toggleLiveStatus()">
+            
         </form>
     </div>
 
@@ -162,34 +160,7 @@
         document.getElementById('hiddenFacultyId').value = facultyId;
     });
 
-    // Function to toggle live status
-    function toggleLiveStatus() {
-        const facultyId = document.getElementById('hiddenFacultyId').value; // Get faculty ID
-        const liveStatus = document.getElementById('liveStatus').checked; // Get live status value
-
-        // Send live status data to backend server
-        fetch('http://localhost:5003/update-live-status', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ facultyId, liveStatus })
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.text();
-        })
-        .then(data => {
-            console.log('Live status updated successfully:', data);
-            // Handle response if needed
-        })
-        .catch(error => {
-            console.error('Error updating live status:', error);
-            // Handle error if needed
-        });
-    }
+   
 </script>
 
 </body>
