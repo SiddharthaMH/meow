@@ -158,24 +158,149 @@ app.put("/update-existing-timings", async (req, res) => {
         res.status(500).send("Internal Server Error: " + error.message); // Add error message to response
     }
 }),
-app.post('/upload', upload.single('image'), async (req, res) => {
+app.post('/store-comment', async (req, res) => {
     try {
-      // Read the uploaded image file
-      const imageBuffer = req.file.buffer;
-  
-      // Extract faculty_id from the request body
-      const facultyId = req.body.faculty_id;
-  
-      // Insert image data into the database
-      await pool.query('UPDATE faculty SET image_data = $1 WHERE faculty_id = $2', [imageBuffer, facultyId]);
-  
-      res.send('Image uploaded successfully.');
+        const { username, comment, facultyName } = req.body;
+
+        // Retrieve faculty ID (fid) based on the provided facultyName
+        const facultyIdQuery = await pool.query(
+            'SELECT fid FROM faculty WHERE fname = $1',
+            [facultyName]
+        );
+
+        // Check if the facultyName exists
+        if (facultyIdQuery.rows.length === 0) {
+            return res.status(404).json({ success: false, error: 'Faculty not found.' });
+        }
+
+        const facultyId = facultyIdQuery.rows[0].fid;
+
+        // Store the comment in the database
+        const result = await pool.query(
+            'INSERT INTO comments (username, comment, faculty_name, fid) VALUES ($1, $2, $3, $4)',
+            [username, comment, facultyName, facultyId]
+        );
+
+        res.status(200).json({ success: true, message: 'Comment stored successfully.' });
     } catch (error) {
-      console.error('Error uploading image:', error);
-      res.status(500).send('Internal Server Error');
+        console.error('Error storing comment:', error);
+        res.status(500).json({ success: false, error: 'Internal Server Error' });
     }
-  });
+}),
+
   
+  app.get('/get-comments', async (req, res) => {
+    try {
+        const { facultyId } = req.query;
+
+        // Fetch comments for the specified facultyId from the database
+        const comments = await pool.query(
+            'SELECT * FROM comments WHERE fid = $1',
+            [facultyId]
+        );
+
+        res.json(comments.rows);
+    } catch (error) {
+        console.error('Error fetching comments:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}),
+app.get('/get-faculty-id', async (req, res) => {
+    try {
+        //console.log("inside get-faculty-id");
+        const { facultyName } = req.query;
+        //console.log("facultyId",facultyId);
+        const result = await pool.query('SELECT fid FROM faculty WHERE fname = $1', [facultyName]);
+        if (result.rows.length === 0) {
+            res.status(404).json({ error: 'Faculty not found' });
+        } else {
+            const facultyId = result.rows[0].fid;
+            //console.log(facultyId);
+            res.status(200).json({ facultyId });
+        }
+    } catch (error) {
+        console.error('Error fetching facultyId:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}),
+
+// Assuming you have a PostgreSQL database connection setup and imported as 'pool'
+
+app.post('/submit-comment', async (req, res) => {
+    try {
+        const { facultyId, comment } = req.body;
+
+        // Check if a record already exists for the facultyId
+        const existingComment = await pool.query('SELECT * FROM faculty_messages WHERE fid = $1', [facultyId]);
+
+        if (existingComment.rows.length > 0) {
+            // Update the existing comment
+            await pool.query('UPDATE faculty_messages SET message = $1 WHERE fid = $2', [comment, facultyId]);
+            res.status(200).json({ message: 'Comment updated successfully' });
+        } else {
+            // Insert a new comment
+            await pool.query('INSERT INTO faculty_messages (fid, message) VALUES ($1, $2)', [facultyId, comment]);
+            res.status(200).json({ message: 'Comment submitted successfully' });
+        }
+    } catch (error) {
+        console.error('Error submitting comment:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}),
+// Assuming you have a PostgreSQL database connection setup and imported as 'pool'
+
+app.get('/get-comment', async (req, res) => {
+    try {
+        const { facultyId } = req.query;
+
+        // Fetch the comment for the given facultyId
+        const commentResult = await pool.query('SELECT message FROM faculty_messages WHERE fid = $1', [facultyId]);
+        //console.log("Comment result:",commentResult);
+
+        if (commentResult.rows.length > 0) {
+            const comment = commentResult.rows[0].message;
+            //console.log("Inside backend",comment);
+            res.status(200).json({ comment });
+            
+        } else {
+            res.status(404).json({ message: 'Comment not found' });
+        }
+    } catch (error) {
+        console.error('Error fetching comment:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}),
+
+app.post('/submit-reply', async (req, res) => {
+    console.log("Inside submit reply backend");
+    try {
+        const { facultyId, facultyName, originalMessage, reply, username } = req.body;
+        
+        // Insert the reply into the database
+        await pool.query('INSERT INTO faculty_reply (fid, fname, message, reply, username) VALUES ($1, $2, $3, $4, $5)', [facultyId, facultyName, originalMessage, reply, username]);
+        
+        res.status(200).json({ message: 'Reply submitted successfully' });
+    } catch (error) {
+        console.error('Error submitting reply:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+
+
+// Route to fetch faculty schedule based on facultyId
+app.get('/get-faculty-schedule', async (req, res) => {
+    try {
+        const { facultyId } = req.query;
+        const result = await pool.query('SELECT day_of_week,start_time,end_time FROM faculty_schedule WHERE fid = $1', [facultyId]);
+        const scheduleData = result.rows;
+        res.status(200).json(scheduleData);
+    } catch (error) {
+        console.error('Error fetching faculty schedule:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
   
  
 

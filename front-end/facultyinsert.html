@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,7 +70,7 @@
             <button class="submitComment" type="button" onclick="submitComment()">Submit Comment</button><br><br>
     
             <!-- Hidden field to store the username -->
-            
+            <input type="hidden" id="hiddenFacultyId" name="facultyId" value="2">
         </form>
     </div>
 
@@ -145,22 +146,6 @@
             // Handle error if needed
         });
     }
-
-
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const facultyId = urlParams.get('facultyId'); // Change from username to facultyId
-
-        // Display the faculty ID in the top menu bar or wherever needed
-        const usernameDisplay = document.getElementById('usernameDisplay');
-        usernameDisplay.textContent = `WELCOME, Faculty ID: ${facultyId}!`;
-
-        // Set the faculty ID value in the hidden field
-        document.getElementById('hiddenFacultyId').value = facultyId;
-    });
-
-   
 </script>
 
 </body>

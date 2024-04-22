@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professor Dashboard</title>
+    <link rel="stylesheet" href="css/studenthomepage.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="welcome-text" id="welcomeText"></div>
+    <nav class="sidebar">
+        <ul>
+            <li><a href="#"><i class="fas fa-home"></i></a></li>
+            <li><a href="facultyinsert.html"><i class="fas fa-user-plus"></i></a></li>
+            <li><a href="#" class="notification-btn"><i class="fas fa-bell"></i></a></li>
+            <li><a href="search.html" id="searchLink"><i class="fas fa-search"></i></a></li>
+        </ul>
+        <div class="professor-icon">
+            <i class="fas fa-user-tie"></i>
+        </div>
+        <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i></button>
+    </nav>
+    <div class="all" style="display: flex;">
+    <div class="image">
+        <img src="/">
+    </div>
+    <div class="student-info">
+        <div class="name">
+            <h3>Name</h3>
+            <p id="facultyName"></p>
+        </div>
+        <div class="email">
+            <h3>Email</h3>
+            <p id="facultyEmail"></p>
+        </div>
+        <div class="dept">
+            <h3>Department</h3>
+            <p id="facultyDept"></p>
+        </div>
+        <div class="cabin">
+            <h3>Cabin No.</h3>
+            <p id="facultyCabin"></p>
+        </div>
+        <div class="block">
+            <h3>Block</h3>
+            <p id="facultyBlock"></p>
+        </div>
+        <div class="toggle-container">
+            <label for="liveStatus">Live Status:</label>
+            <label class="switch">
+                <input type="checkbox" id="liveStatus" onclick="toggleLiveStatus()">
+                <span class="slider"></span>
+            </label>
+        </div>
+        <input type="hidden" id="hiddenUsername" value="">
+    </div>
+    <button id="openModalBtn">Update Details</button>
+    <div id="updateModal" class="modal">
+        <div class="modal-content">
+            <!-- Form for updating faculty details -->
+            <form id="updateForm">
+                <div class="name">
+                    <h3>Name</h3>
+                    <input type="text" id="facultyNameInput" name="name">
+                </div>
+                <div class="email">
+                    <h3>Email</h3>
+                    <input type="email" id="facultyEmailInput" name="email">
+                </div>
+                <div class="dept">
+                    <h3>Department</h3>
+                    <input type="text" id="facultyDeptInput" name="department">
+                </div>
+                <div class="cabin">
+                    <h3>Cabin No.</h3>
+                    <input type="text" id="facultyCabinInput" name="cabin">
+                </div>
+                <div class="block">
+                    <h3>Block</h3>
+                    <input type="text" id="facultyBlockInput" name="block">
+                </div>
+                <!-- Button to submit form -->
+                <button type="submit">Update Details</button>
+            </form>
+        </div>
+    </div>
+    </div>
+    <footer>
+        <p>&copy; 2024 FindMyProfessor</p>
+    </footer>
+    
+    <!-- Notification Tab -->
+    <div id="notificationTab" class="notificationTab">
+        <span class="close">&times;</span>
+        <p>Notification</p>
+    </div>
+
+    <!-- JavaScript for logout and fetching faculty details -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const logoutBtn = document.querySelector('.logout-btn');
+        const notificationBtn = document.querySelector('.notification-btn');
+        const notificationTab = document.querySelector('.notificationTab');
+        const closeBtn = document.querySelector('.close');
+        const searchLink = document.getElementById('searchLink');
+
+        notificationBtn.addEventListener('click', (event) => {
+            event.stopPropagation();
+            const rect = notificationBtn.getBoundingClientRect();
+            notificationTab.style.display = 'block';
+            notificationTab.style.top = `${rect.bottom}px`;
+            notificationTab.style.left = `${rect.left}px`;
+        });
+
+        window.addEventListener('click', (event) => {
+            if (!event.target.closest('.notificationTab') && event.target !== notificationBtn) {
+                notificationTab.style.display = 'none';
+            }
+        });
+
+        closeBtn.addEventListener('click', () => {
+            notificationTab.style.display = 'none';
+        });
+
+        window.addEventListener('click', (event) => {
+            if (!event.target.closest('.notificationTab') && event.target !== notificationBtn) {
+                notificationTab.style.display = 'none';
+            }
+        });
+
+        // Get the logout button element
+        logoutBtn.addEventListener('click', function() {
+            // Redirect to the logout page when the button is clicked
+            window.location.href = 'facultylogin.html'; // Replace 'facultylogin.html' with the URL of your logout page
+        });
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const username = urlParams.get('username'); // Retrieve 'username'
+
+        // Update the search link with the username
+        searchLink.href = `search.html?username=${encodeURIComponent(username)}`;
+    });
+    </script>
+</body>
+</html>

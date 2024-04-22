@@ -3,8 +3,8 @@
 
 body {
   min-height: 99vh;
-  background: rgb(253, 219, 218);
-  background: linear-gradient(0deg, rgb(0, 0, 0) 20%, rgb(216 145 17) 58%, rgb(136 23 23) 98%);
+  background: rgb(152, 137, 26);
+ 
   overflow: hidden;
 }
 
@@ -120,7 +120,7 @@ header {
     position:relative;
     font-weight: 400;
     font-size: 49px;
-    color: #33c2de;
+    color: #000203;
     top: 200px;
     left: 200px;
   

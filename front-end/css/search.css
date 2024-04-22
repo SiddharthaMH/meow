@@ -1,150 +1,104 @@
+@font-face {
+  font-family: 'Aaa';
+  src: url('/front-end/fonts/Dune_Rise.ttf') format('truetype');
+}
 body {
-    min-height: 99vh;
-    background: rgb(253, 219, 218);
-    background: linear-gradient(0deg, rgb(0, 0, 0) 20%, rgb(216 145 17) 58%, rgb(136 23 23) 98%);
-    overflow: hidden;
+  min-height: 99vh;
+  background: rgb(16, 28, 31);
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+.content {
+  display: flex;
+  margin-top: 50px;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.form-container {
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.263);
+  padding: 20px;
+  border-radius: 10px;
+  width: 30%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+label {
+  font-weight: bold;
+}
+
+input[type="submit"] {
+  display: block;
+  width: 20%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+input[type="text"] {
+  width: 199px; /* Adjust width as needed */
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+input[list] {
+  width: 220px; /* Adjust width as needed */
+}
+
+/* Center the icon vertically and horizontally */
+button[type="submit"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px; /* Adjust width as needed */
+  height: 40px; /* Adjust height as needed */
+  border: none;
+  font-size: 25px;
+  background-color: transparent; /* Transparent background */
+  cursor: pointer;
+  transition: all 0.3s ease; /* Smooth transition for hover effect */
+}
+
+/* Increase button width and change color on hover */
+button[type="submit"]:hover {
+  color: #007bff; /* Change color on hover */
+}
+
+.heading {
+  color: #ffffff;
+  font-family: 'Aaa';
+  font-size: 80px;
+  font-weight: bolder;
+  animation: colorChange 3s infinite alternate; /* Adjust animation duration and timing as needed */
+}
+
+@keyframes colorChange {
+  0% {
+      color: #ffffff; /* Initial color */
   }
-  @font-face {
-    font-family:'A1' ;
-    src: url('/front-end/fonts/Dune_Rise.ttf') format('truetype');
+  50% {
+      color: #101c1f /* Final color */
   }
-    .menu-bar {
-      font-family: 'A1';
-      display: flex;
-      position: relative;
-      top: 0px;
-      left: 0%;
-      background-color: rgba(10, 9, 7, 0);
-      width: 100%;
-      
-      justify-content: flex-end;
-    }
-    .menu-bar ul {
-      margin: 0;
-      padding: 1vh 0;
-      text-align: center;
-    }
-    
-    .menu-bar ul li {
-      display: inline-block;
-      margin-right: 1vw;
-    }
-    
-    .menu-bar ul li:last-child {
-      margin-right: 3vw;
-    }
-    
-    .menu-bar ul li a {
-      display: block;
-      color: #fffcfc;
-      text-decoration: none;
-      font-size: 2vh;
-      position: relative;
-      padding: 1vh 1vw;
-    }
-    .menu-bar ul li a:hover:after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      width: 70%;
-      height: 2px;
-      background-color: #b14e4e;
-      border-radius: 2px;
-      transform: translateX(-50%);
-    }
-    #usernameDisplay {
-      display: block;
-      color: #fff; /* Text color */
-      text-decoration: none;
-      font-size: 16px; /* Font size */
-      padding: 10px 20px; /* Padding */
+  100%{
+      color: #ffffff;
   }
-    
-    .dropdown {
-      position: relative;
-    }
-    
-    .phone {
-      color: #fffcff;
-      font-size: 2vh;
-    }
-    
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background-color: #33333300;
-      min-width: 160px;
-      z-index: 1;
-    }
-    
-    .dropdown-content a {
-      display: block;
-      padding: 1vh 1vw;
-      color: #fff;
-      text-decoration: none;
-    }
-    
-    .dropdown-content a:hover {
-    
-      color: #fff;
-    }
-    
-    .dropdown:hover .dropdown-content {
-      display: block;
-    }
-    
-  .header-container {
-      text-align: center;
-      padding: 50px 0; /* Increase header size */
-  }
-  
-  
-  .content {
-      text-align: center; /* Center form contents */
-      margin-top: 250px; /* Adjust margin as needed */
-  }
-  
-  .form-group {
-      margin-bottom: 20px;
-  }
-  .form-group {
-    font-family: 'A1'; /* Set font family to A1 */
-    margin-bottom: 20px;
-  }
-  .forgot{
-    font-family: 'A1';
-    font-size: large;
-    font-weight: 400;
-  }
-  label {
-      display: block;
-      margin-bottom: 5px;
-  }
-  
-  input[type="text"], input[type="password"] {
-      width: 20%;
-      padding: 10px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      box-sizing: border-box;
-  }
-  
-  input[type="submit"] {
-      width: 10%;
-      padding: 10px;
-      background-color: #333;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-  }
-  
-  input[type="submit"]:hover {
-      background-color: #555;
-  }
-  
-  
+}

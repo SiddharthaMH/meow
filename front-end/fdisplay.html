@@ -86,30 +86,9 @@
       height: 150px; /* Adjust the height as needed */
       resize: vertical; /* Allow vertical resizing */
     }
-    .submitComment,
-        .CheckTime {
-            display: block;
-            width: 200px; /* Adjust width as needed */
-            height: 50px; /* Adjust height as needed */
-            border: none;
-            border-radius: 25px; /* Half of height to make it round */
-            background-color: #007bff; /* Button color */
-            color: white;
-            font-size: 20px; /* Adjust font size as needed */
-            text-align: center;
-            line-height: 50px; /* Center text vertically */
-            cursor: pointer;
-            margin: 0 auto; /* Center button horizontally */
-            margin-bottom: 20px; /* Add space between buttons */
-            outline: none; /* Remove outline */
-            transition: background-color 0.3s; /* Smooth transition effect */
-        }
-
-        /* Hover effect */
-        .submitComment:hover,
-        .CheckTime:hover {
-            background-color: #0056b3; /* Darker color on hover */
-        }
+    .submitComment {
+      margin-top: 10px; /* Add some space between the textarea and the button */
+    }
     </style>
 </head>
 
@@ -138,12 +117,7 @@
 
     <button class="status-button" id="liveStatusButton">Loading...</button>
 
-<div class="message">
-    
-    <textarea id="comment" name="comment" rows="4" cols="50"></textarea>
-    <button class="submitComment" type="button" onclick="submitComment()">Submit Comment</button><br><br>
-    <button class="CheckTime" type="button" onclick="checkTime()">Check Time</button><br><br>
-</div>
+
     <script>
         // Function to retrieve query parameters from URL
         function getQueryParams() {
@@ -177,7 +151,7 @@
         // Function to update live status button
         function updateLiveStatusButton(liveStatus) {
             const button = document.getElementById("liveStatusButton");
-            button.textContent = liveStatus ? "AVAILABLE" : "NOT AVAILABLE";
+            button.textContent = liveStatus ? "Live" : "Offline";
             button.className = `status-button ${liveStatus ? 'true' : 'false'}`;
         }
 
@@ -249,25 +223,12 @@
     });
 }
 
-function checkTime() {
-        // Get the facultyId and facultyName from the URL
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-        const facultyId = urlParams.get('facultyId');
-        const facultyName = urlParams.get('facultyName');
-
-        // Construct the URL for the ftime.html page with facultyId and facultyName as query parameters
-        const ftimeUrl = `ftime.html?facultyName=${encodeURIComponent(facultyName)}`;
-
-        // Redirect to the ftime.html page
-        window.location.href = ftimeUrl;
-
-}
-
     </script>
     
     
     
+    
+    </script>
 </body>
 
 </html>

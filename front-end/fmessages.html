@@ -60,7 +60,7 @@
             <button id="submitReply">Submit Reply</button>
         </div>
     </div>
-</body>
+
 <script>
     const logoutBtn = document.querySelector('.logout-btn');
     const notificationBtn = document.querySelector('.notification-btn');
@@ -115,15 +115,17 @@
 
         // Function to handle replying to messages
         function replyToMessage(username, message) {
+            console.log('Reply to message function called'); 
             // Display the reply modal
             const replyModal = document.getElementById('replyModal');
-            replyModal.style.display = 'block';
+    replyModal.style.display = 'block';
+    console.log('Reply modal displayed'); // Add this line to check if the function is called
 
-            // Set event listener for closing the modal
-            const closeModal = document.querySelector('.close');
-            closeModal.onclick = () => {
-                replyModal.style.display = 'none';
-            };
+    // Set event listener for closing the modal
+    const closeModal = document.querySelector('.close');
+    closeModal.onclick = () => {
+        replyModal.style.display = 'none';
+    };
 
             // Set event listener for submitting the reply
             const submitReplyBtn = document.getElementById('submitReply');
@@ -187,6 +189,7 @@
                     const replyButtons = document.querySelectorAll('.reply-btn');
                     replyButtons.forEach(replyButton => {
                         replyButton.addEventListener('click', () => {
+                            console.log('Reply button clicked'); 
                             // Get the username and message for the selected row
                             const username = replyButton.parentElement.parentElement.cells[0].textContent;
                             const message = replyButton.parentElement.parentElement.cells[1].textContent;
@@ -206,3 +209,5 @@
     });
 </script>
 </html>
+
+

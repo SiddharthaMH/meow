@@ -6,26 +6,38 @@
     <title>Professor Dashboard</title>
     <link rel="stylesheet" href="css/facultyhomepage.css">
     <!-- Font Awesome for icons -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   </head>
   <body>
       <div class="welcome-text"id="welcomeText"></div>
+      
     <nav class="sidebar">
       <ul>
-        <li><a href="#"><i class="fas fa-home"></i></a></li>
-        <li><a href="facultyinsert.html"><i class="fas fa-user-plus"></i></a></li>
+        
+        <li><a id="finsertLink" href="#"><i class="fas fa-user-plus"></i></a></li>
         <li><a href="#" class="notification-btn"><i class="fas fa-bell"></i></a></li>
-      
+        <li><a id="fmessagesLink" href="#"><i class="fas fa-envelope"></i></a></li>
+
       </div>
-        <li><a href="search.html"><i class="fas fa-search"></i></a></li>
+        <li><a href="fsearch.html"><i class="fas fa-search"></i></a></li>
+        <li><a href="studentaboutus.html"><i class="fas fa-info-circle"></i></a></li>
+        
       </ul>
       <div class="professor-icon">
-          <i class="fas fa-user-tie"></i>
-      </div>
-      
-      <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i></button>
+        <i class="fas fa-user-tie"></i>
+    </div>
+    <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i></button>
+</nav>
+<div class="all" style="display: flex;">
+<div class="image">
+  
 
-    </nav>
+    <img src="/front-end/images/logo3.png">
+   
+</div>
     <div class="professor-info">
       <div class="name">
         <h3>Name</h3>
@@ -49,28 +61,124 @@
       </div>
       <div class="block">
         <input type="hidden" id="selectedFacultyName" name="selectedFacultyName" value="">
+        <div class="toggle-container">
           <label for="liveStatus">Live Status:</label>
-          <input type="checkbox" id="liveStatus" onclick="toggleLiveStatus()">
-        </div>
+          <label class="switch">
+              <input type="checkbox" id="liveStatus" onclick="toggleLiveStatus()">
+              <span class="slider"></span>
+          </label>
+      </div>
         <input type="hidden" id="hiddenFacultyId" value="">
     </div>
-  
-      <footer>
-        <p>&copy; 2024 FindMyProfessor</p>
-      </footer>
 
-      <!-- Notification Tab -->
-      <div id="notificationTab" class="notificationTab">
-          <span class="close">&times;</span>
-          <p>Notification</p>
+        <!-- Button to trigger update -->
+        <button id="openModalBtn">Update </button>
+
+  
+    <div id="updateModal" class="modal">
+        <div class="modal-content">
+            <!-- Form for updating faculty details -->
+            <form id="updateForm">
+                <div class="name">
+                    <h3>Name</h3>
+                    <input type="text" id="facultyNameInput" name="name">
+                </div>
+                <div class="email">
+                    <h3>Email</h3>
+                    <input type="email" id="facultyEmailInput" name="email">
+                </div>
+                <div class="dept">
+                    <h3>Department</h3>
+                    <input type="text" id="facultyDeptInput" name="department">
+                </div>
+                <div class="cabin">
+                    <h3>Cabin No.</h3>
+                    <input type="text" id="facultyCabinInput" name="cabin">
+                </div>
+                <div class="block">
+                    <h3>Block</h3>
+                    <input type="text" id="facultyBlockInput" name="block">
+                </div>
+                <!-- Button to submit form -->
+                <button type="submit">Update Details</button>
+            </form>
+        </div>
+    </div>
+    
+    <footer>
+      <p>&copy; 2024 FindMyProfessor</p>
+      <div class="calendar-popup">
+          <i class="fas fa-calendar"></i> Calendar Popup
+          <div id="calendar"></div>
       </div>
+  </footer>
+    
+    <!-- Notification Tab -->
+       <!-- Notification Tab -->
+<div id="notificationTab" class="notificationTab">
+  <span class="close">&times;</span>
+  <p>Notification</p>
+</div>
+
   </body>
+
   <script>
+    $(function() {
+                // Initialize datepicker
+                $("#calendar").datepicker({
+                    // Highlight today's date
+                    beforeShowDay: function(date) {
+                        if (date.getTime() === new Date().setHours(0, 0, 0, 0)) {
+                            return [true, 'ui-state-highlight', ''];
+                        }
+                        return [true, '', ''];
+                    }
+                });
+            });
+    
+     const openModalBtn = document.getElementById('openModalBtn');
+    const updateModal = document.getElementById('updateModal');
+    const closeModalBtn = document.querySelector('.close');
+
+    
+
       const logoutBtn = document.querySelector('.logout-btn');
       const notificationBtn = document.querySelector('.notification-btn');
       const notificationTab = document.querySelector('.notificationTab');
       const closeBtn = document.querySelector('.close');
+     // Get the current URL parameters
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const facultyId = urlParams.get('facultyId');
+const facultyName = urlParams.get('facultyName');
 
+// Construct the URL with parameters for fmessages.html
+const fmessagesUrl = `fmessages.html?facultyId=${facultyId}`;
+const finserturl=`facultyinsert.html?facultyId=${facultyId}`;
+
+// Print the URL or set it as href attribute
+console.log(fmessagesUrl); 
+document.getElementById('fmessagesLink').href = fmessagesUrl;
+document.getElementById('finsertLink').href = finserturl;
+// This prints the URL
+// Alternatively, if you want to set it as href attribute of an anchor tag:
+// document.getElementById('fmessagesLink').href = fmessagesUrl;
+
+// Now you can use the facultyId in your JavaScript code as needed
+console.log(facultyId);
+openModalBtn.addEventListener('click', () => {
+        updateModal.style.display = 'block';
+    });
+
+    closeModalBtn.addEventListener('click', () => {
+        updateModal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === updateModal) {
+            updateModal.style.display = 'none';
+        }
+    });
       notificationBtn.addEventListener('click', (event) => {
           event.stopPropagation();
           const rect = notificationBtn.getBoundingClientRect();
@@ -109,6 +217,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         const facultyId = urlParams.get('facultyId');
         const selectedFacultyName = urlParams.get('facultyName');
+        console.log(facultyId);
 
         // Fetch faculty details from the backend
         fetch(`http://localhost:5003/get-faculty-details?facultyId=${facultyId}`)
@@ -174,6 +283,37 @@
           console.log(facultyId);
           document.getElementById('hiddenFacultyId').value = facultyId;
       });
+      document.addEventListener('DOMContentLoaded', function() {
+    const logoutBtn = document.querySelector('.logout-btn');
+    const notificationBtn = document.querySelector('.notification-btn');
+    const notificationTab = document.querySelector('.notificationTab');
+    const closeBtn = document.querySelector('.close');
+
+    notificationBtn.addEventListener('click', (event) => {
+        event.stopPropagation();
+        const rect = notificationBtn.getBoundingClientRect();
+        notificationTab.style.display = 'block';
+        notificationTab.style.top = `${rect.bottom}px`;
+        notificationTab.style.left = `${rect.left}px`;
+    });
+
+    window.addEventListener('click', (event) => {
+        if (!event.target.closest('.notificationTab') && event.target !== notificationBtn) {
+            notificationTab.style.display = 'none';
+        }
+    });
+
+    closeBtn.addEventListener('click', () => {
+        notificationTab.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+        if (!event.target.closest('.notificationTab') && event.target !== notificationBtn) {
+            notificationTab.style.display = 'none';
+        }
+    });
+});
+      
   </script>
 
   </html>

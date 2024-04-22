@@ -80,16 +80,15 @@
             </datalist>
             <button type="submit"><i class="fas fa-search"></i></button>
         </form>
-        <br>
-			<a class="forgot" href="forgot_pas.html">Don't know Name<br>😂</a> <!-- Link to Forgot Password page -->
-			<br>
-		</div>
+        <div class="forgot">
+            <br>
+            <a class="forgot" href="forgot.html">Don't know Name<br>😂</a> <!-- Link to Forgot Password page -->
+            <br>
+        </div>
     </div>
-</div>
-
+    </div>
     <!-- Script to handle form submission -->
     <script>
-		
         // Function to handle form submission
         document.getElementById('professorForm').addEventListener('submit', function (event) {
             event.preventDefault(); // Prevent form submission
@@ -101,7 +100,7 @@
             const username = urlParams.get('username');
 
             // Redirect to display page with selected faculty name
-            window.location.href = `display.html?facultyName=${encodeURIComponent(professorName)}&username=${encodeURIComponent(username)}`;
+            window.location.href = `fdisplay.html?facultyName=${encodeURIComponent(professorName)}`;
         });
     </script>
 <!-- Code injected by live-server -->
