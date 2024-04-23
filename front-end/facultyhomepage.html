@@ -79,18 +79,12 @@
         <div class="modal-content">
             <!-- Form for updating faculty details -->
             <form id="updateForm">
-                <div class="name">
-                    <h3>Name</h3>
-                    <input type="text" id="facultyNameInput" name="name">
-                </div>
-                <div class="email">
-                    <h3>Email</h3>
-                    <input type="email" id="facultyEmailInput" name="email">
-                </div>
+                
                 <div class="dept">
                     <h3>Department</h3>
                     <input type="text" id="facultyDeptInput" name="department">
                 </div>
+                
                 <div class="cabin">
                     <h3>Cabin No.</h3>
                     <input type="text" id="facultyCabinInput" name="cabin">
@@ -98,6 +92,10 @@
                 <div class="block">
                     <h3>Block</h3>
                     <input type="text" id="facultyBlockInput" name="block">
+                </div>
+                <div class="dept">
+                    <h3>Floor</h3>
+                    <input type="text" id="facultyFloorInput" name="floor">
                 </div>
                 <!-- Button to submit form -->
                 <button type="submit">Update Details</button>
@@ -150,6 +148,7 @@
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const facultyId = urlParams.get('facultyId');
+document.getElementById('hiddenFacultyId').value = facultyId;
 const facultyName = urlParams.get('facultyName');
 
 // Construct the URL with parameters for fmessages.html
@@ -212,6 +211,49 @@ openModalBtn.addEventListener('click', () => {
           window.location.href = 'facultylogin.html'; // Replace 'logout.html' with the URL of your logout page
       });
   });
+  document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(queryString);
+const facultyId = urlParams.get('facultyId');
+    const updateForm = document.getElementById('updateForm');
+     // Replace 'your_faculty_id_value_here' with the actual faculty ID value
+
+    // Add event listener to handle form submission
+    updateForm.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission behavior
+
+        // Gather form data
+        const formData = new FormData(event.target);
+        const name = formData.get('name');
+        const email = formData.get('email');
+        const department = formData.get('department');
+        const cabin = formData.get('cabin');
+        const block = formData.get('block');
+        const floor = formData.get('floor');
+
+        // Send form data to the server
+        fetch('http://localhost:5003/update-faculty-details', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ facultyId, department, cabin, block,floor })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(data => {
+            console.log('Faculty details updated successfully:', data);
+            // Handle success message if needed
+        })
+        .catch(error => {
+            console.error('Error updating faculty details:', error);
+            // Handle error if needed
+        });
+    });
+});
 
       document.addEventListener('DOMContentLoaded', function() {
         const urlParams = new URLSearchParams(window.location.search);

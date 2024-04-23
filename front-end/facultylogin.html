@@ -27,7 +27,7 @@
                 575002</a>
             </div>
         </li>
-        <li><a href="studentlogin.html">STUDENT SIGNIN</a></li>
+        
       </ul>
     </div>
 </nav>
@@ -72,6 +72,8 @@
       if (response.ok) {
         // Optionally, display a success message or redirect to another page
         console.log('Login successful');
+        console.log('Username:', username);
+        sessionStorage.setItem('username',username);
         console.log('Username:', username);
         window.location.href = `facultyhomepage.html?facultyId=${facultyId}`;
       } else {

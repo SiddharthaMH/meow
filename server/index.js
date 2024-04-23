@@ -141,6 +141,30 @@ app.put("/update-existing-timings", async (req, res) => {
       res.status(500).send("Internal Server Error");
     }
   }),
+  app.get('/get-live-status', async (req, res) => {
+    try {
+        const { facultyName } = req.query;
+
+        // Retrieve live status and cabin details from the database for the specified faculty name
+        const result = await pool.query(`
+            SELECT f.fname, f.femail, f.fdept, f.live_status, c.fblock, c.ffloor, c.fcabinno
+            FROM faculty f
+            JOIN cabin c ON f.fid = c.fid
+            WHERE f.fname = $1
+        `, [facultyName]);
+
+        if (result.rows.length === 0) {
+            // Faculty member not found
+            return res.status(404).json({ error: 'Faculty member not found' });
+        }
+
+        const { fname, femail, fdept, live_status, fblock, ffloor, fcabinno } = result.rows[0];
+        res.status(200).json({ fname, femail, fdept, live_status, fblock, ffloor, fcabinno });
+    } catch (error) {
+        console.error('Error retrieving live status:', error.message);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}),
 
   app.post("/update-live-status", async (req, res) => {
     try {
@@ -299,60 +323,67 @@ app.get('/get-faculty-schedule', async (req, res) => {
         console.error('Error fetching faculty schedule:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
-});
-
-  
- 
-
-  app.get('/get-live-status', async (req, res) => {
-    try {
-        const { facultyName } = req.query;
-
-        // Retrieve live status and cabin details from the database for the specified faculty name
-        const result = await pool.query(`
-            SELECT f.fname, f.femail, f.fdept, f.live_status, c.fblock, c.ffloor, c.fcabinno
-            FROM faculty f
-            JOIN cabin c ON f.fid = c.fid
-            WHERE f.fname = $1
-        `, [facultyName]);
-
-        if (result.rows.length === 0) {
-            // Faculty member not found
-            return res.status(404).json({ error: 'Faculty member not found' });
-        }
-
-        const { fname, femail, fdept, live_status, fblock, ffloor, fcabinno } = result.rows[0];
-        res.status(200).json({ fname, femail, fdept, live_status, fblock, ffloor, fcabinno });
-    } catch (error) {
-        console.error('Error retrieving live status:', error.message);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
 }),
-// Endpoint to fetch faculty details
-app.get('/get-faculty-details', async (req, res) => {
-    try {
-        const { facultyId } = req.query;
+app.post('/update-faculty-details', (req, res) => {
+    const { facultyId, department, cabin, block,floor } = req.body;
+    console.log(req.body);
 
-        // Retrieve faculty details including cabin number and block from the database
-        const result = await pool.query(`
-            SELECT f.fname, f.femail, f.fdept, f.live_status, c.fblock, c.ffloor, c.fcabinno
-            FROM faculty f
-            JOIN cabin c ON f.fid = c.fid
-            WHERE f.fid = $1
-        `, [facultyId]);
+    const facultySql = `
+        UPDATE faculty
+        SET fdept = $1
+        WHERE fid = $2
+    `;
 
-        if (result.rows.length === 0) {
-            // Faculty not found
-            return res.status(404).json({ error: 'Faculty not found' });
+    const cabinSql = `
+        UPDATE cabin
+        SET fcabinno = $1, fblock = $2, ffloor = $3
+        WHERE fid = $4
+    `;
+
+    pool.query(facultySql, [department, facultyId], (err1, result1) => {
+        if (err1) {
+            console.error('Error updating faculty details:', err1);
+            res.status(500).json({ error: 'Error updating faculty details' });
+        } else {
+            pool.query(cabinSql, [cabin, block,floor, facultyId], (err2, result2) => {
+                if (err2) {
+                    console.error('Error updating cabin details:', err2);
+                    res.status(500).json({ error: 'Error updating cabin details' });
+                } else {
+                    console.log('Faculty and cabin details updated successfully');
+                    res.json({ message: 'Faculty and cabin details updated successfully' });
+                }
+            });
         }
-
-        const facultyDetails = result.rows[0];
-        res.status(200).json(facultyDetails);
-    } catch (error) {
-        console.error('Error fetching faculty details:', error.message);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
+    });
 });
+
+app.get('/get-faculty-details', (req, res) => {
+    const facultyId = req.query.facultyId;
+
+    // Query to fetch faculty and cabin details using a join operation
+    const sql = `
+        SELECT faculty.fname, faculty.femail, cabin.fcabinno, cabin.fblock, faculty.fdept
+        FROM faculty
+        INNER JOIN cabin ON faculty.fid = cabin.fid
+        WHERE faculty.fid = $1
+    `;
+    
+    pool.query(sql, [facultyId], (err, result) => {
+        if (err) {
+            console.error('Error fetching faculty details:', err);
+            res.status(500).json({ error: 'Internal server error' });
+        } else {
+            if (result.rows.length > 0) {
+                res.json(result.rows[0]); // Send faculty details as JSON response
+            } else {
+                res.status(404).json({ error: 'Faculty details not found' }); // Send 404 error if faculty details not found
+            }
+        }
+    });
+});
+
+
 
 
 
