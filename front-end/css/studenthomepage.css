@@ -135,8 +135,8 @@
   .name,
   .email,
   .dept,
-  .cabin,
-  .block {
+  
+  .sem {
     margin-bottom: 20px; /* Margin between each box */
     background-color: #d0d2d4b4; /* Background color for each detail box */
     padding: 10px; /* Reduced padding inside each box */
@@ -147,8 +147,7 @@
   .name h3,
   .email h3,
   .dept h3,
-  .cabin h3,
-  .block h3 {
+  .sem h3 {
     color: #1b0a0a;
     font-size: 18px;
     margin-bottom: 10px;
@@ -158,8 +157,7 @@
   .name p,
   .email p,
   .dept p,
-  .cabin p,
-  .block p {
+  .sem p {
     font-size: 16px;
     color: #333;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Nice font */

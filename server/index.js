@@ -21,6 +21,7 @@ app.post("/sregister", async(req,res)=>{
         const {username, password} = req.body;
         console.log(username);// name is username, email is password
         const newuser = await pool.query("INSERT INTO auth Values($1,$2)",[username,password]);
+        const nu=await pool.query("INSERT INTO student (username) VALUES ($1)", [username]);
         res.status(200);
     } catch (error) {
         console.log(error.message);
@@ -357,6 +358,40 @@ app.post('/update-faculty-details', (req, res) => {
         }
     });
 });
+app.post('/update-student-details', (req, res) => {
+    const { username, name, email, department, sem } = req.body;
+    console.log(req.body);
+
+    const facultySql = `
+        UPDATE student
+        SET sname = $1,
+        semail = $2,
+        sdept = $3,
+        ssem = $4
+        where username = $5
+    `;
+
+    /*const cabinSql = `
+        UPDATE cabin
+        SET fcabinno = $1, fblock = $2, ffloor = $3
+        WHERE fid = $4
+    `;*/
+
+    pool.query(facultySql, [name, email, department, sem, username], (err1, result1) => {
+        if (err1) {
+            console.error('Error updating faculty details:', err1);
+            res.status(500).json({ error: 'Error updating faculty details' });
+        } /*else {
+            pool.query(cabinSql, [cabin, block,floor, facultyId], (err2, result2) => {
+                if (err2) {
+                    console.error('Error updating cabin details:', err2);
+                    res.status(500).json({ error: 'Error updating cabin details' });
+                } else {
+                    console.log('Faculty and cabin details updated successfully');
+                    res.json({ message: 'Faculty and cabin details updated successfully' });
+                }*/
+            });
+        });
 
 app.get('/get-faculty-details', (req, res) => {
     const facultyId = req.query.facultyId;
