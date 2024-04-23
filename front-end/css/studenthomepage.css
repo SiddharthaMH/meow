@@ -11,7 +11,7 @@
   body {
     font-family: Arial, sans-serif;
     
-  background-color:  #e7d676;
+    background: rgb(16, 28, 31);
     color: #fff; /* Default text color */
     transition: background-color 0.3s ease, color 0.3s ease; /* Transition for smooth color change */
   }
@@ -63,6 +63,24 @@
     background-color: rgba(85, 85, 85, 0.7); /* Adjust the transparency as needed */
     border-radius: 50%; /* Make it round */
   }
+  .sidebar li {
+    position: relative; /* Required for positioning the popup */
+}
+
+.sidebar li:hover::after {
+    content: attr(data-label); /* Text for the popup label */
+    position: relative; /* Position the popup relative to the li */
+    top: -30px; /* Adjust the vertical position of the popup */
+    margin-left: 50px;/* Adjust the horizontal position of the popup */
+    background-color: #ffffff; /* White background color of the popup */
+    color: #000000; /* Black text color of the popup */
+    padding: 5px 8px; /* Padding around the text */
+    border-radius: 10px; /* Rounded corners for the popup */
+    transform: translateX(-50%); /* Center the popup horizontally */
+    font-size: 14px; /* Adjust the font size of the popup text */
+
+}
+
   
   .logout-btn {
     display: block;
@@ -344,7 +362,7 @@
   /* Adjusted image position */
   .image {
     position: absolute;
-    top: 45%;
+    top: 35%;
     left: 1200px;
     transform: translate(-50%, -50%);
     z-index: 999; /* Ensure the image is above other content */
@@ -359,5 +377,66 @@
    
     transform: translate(-50%, -50%);
     z-index: 9; /* Lower z-index to position it below the modal */
+  }
+  
+  #extraBtn {
+    display: block;
+    width: 200px; /* Adjust width as needed */
+    height: 50px; /* Adjust height as needed */
+    border: none;
+    border-radius: 25px; /* Half of height to make it round */
+    background-color: #007bff; /* Button color */
+    color: white;
+    font-size: 20px; /* Adjust font size as needed */
+    text-align: center;
+    line-height: 50px; /* Center text vertically */
+    cursor: pointer;
+    margin: 0 auto;
+    margin-top:550px;
+    margin-left: 150px; /* Center button horizontally */
+     /* Add space from top */
+    outline: none;
+}
+#extraBtn:hover {
+  background-color: #140808; /* Darken background color */
+}
+#extra1Btn {
+  display: block;
+  width: 200px; /* Adjust width as needed */
+  height: 50px; /* Adjust height as needed */
+  border: none;
+  border-radius: 25px; /* Half of height to make it round */
+  background-color: #007bff; /* Button color */
+  color: white;
+  font-size: 20px; /* Adjust font size as needed */
+  text-align: center;
+  line-height: 50px; /* Center text vertically */
+  cursor: pointer;
+  margin: 0 auto;
+  margin-top:650px;
+  margin-left: -370px; /* Center button horizontally */
+   /* Add space from top */
+  outline: none;
+}
+#extra1Btn:hover {
+background-color: #140808; /* Darken background color */
+}
+  /* Hover effect */
+  #openModalBtn:hover {
+    background-color: #0056b3; /* Darker color on hover */
+  }
+  /* Modal container */
+  /* Modal container */
+  .modal {
+    display: none; /* Hide modal by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%; /* Cover entire width */
+    height: 100%; /* Cover entire height */
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+    backdrop-filter: blur(5px); /* Apply blur effect to the background */
+    overflow: auto;
   }
   

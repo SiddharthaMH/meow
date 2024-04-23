@@ -4,6 +4,7 @@ const cors = require("cors");
 const pool = require("./db");
 const multer = require('multer');
 
+
 app.use(cors());
 app.use(express.json());
 //await pool.connect();
@@ -22,6 +23,7 @@ app.post("/sregister", async(req,res)=>{
         console.log(username);// name is username, email is password
         const newuser = await pool.query("INSERT INTO auth Values($1,$2)",[username,password]);
         const nu=await pool.query("INSERT INTO student (username) VALUES ($1)", [username]);
+        
         res.status(200);
     } catch (error) {
         console.log(error.message);
@@ -183,6 +185,50 @@ app.put("/update-existing-timings", async (req, res) => {
         res.status(500).send("Internal Server Error: " + error.message); // Add error message to response
     }
 }),
+
+app.get('/get-student-details', async (req, res) => {
+    try {
+        const username = req.query.student;
+        const query = 'SELECT * FROM student WHERE username = $1';
+        const { rows } = await pool.query(query, [username]);
+        if (rows.length > 0) {
+            res.json(rows[0]);
+        } else {
+            res.status(404).json({ error: 'Student not found' });
+        }
+    } catch (error) {
+        console.error('Error fetching student details:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+}),
+
+app.get('/get-all-live',async (req,res)=>{
+    try {
+        const query = await pool.query('SELECT f.fname,f.femail,f.fdept,c.ffloor,c.fblock,c.fcabinno from faculty f,cabin c WHERE f.live_status = true and f.fid=c.fid');
+        res.json(query.rows);
+    }
+    catch (error) {
+        console.error('Error storing comment:', error);
+        res.status(500).json({ success: false, error: 'Internal Server Error' });
+    }
+}),
+
+app.get('/get-faculties-one-subject/:subject', async (req, res) => {
+    try {
+        const { subject } = req.params;
+
+        // Assuming you have a table named 'faculty_classes' that links faculties to classes
+        const query = await pool.query('SELECT fname,section FROM subject WHERE subject = $1', [subject]);
+
+        res.json(query.rows);
+    } catch (error) {
+        console.error('Error fetching faculties teaching class:', error);
+        res.status(500).json({ success: false, error: 'Internal Server Error' });
+    }
+});
+
+
+
 app.post('/store-comment', async (req, res) => {
     try {
         const { username, comment, facultyName } = req.body;
@@ -358,40 +404,30 @@ app.post('/update-faculty-details', (req, res) => {
         }
     });
 });
-app.post('/update-student-details', (req, res) => {
-    const { username, name, email, department, sem } = req.body;
-    console.log(req.body);
+app.post('/update-student-details', async (req, res) => {
+    try {
+        const { username, name, email, department, sem } = req.body;
 
-    const facultySql = `
-        UPDATE student
-        SET sname = $1,
-        semail = $2,
-        sdept = $3,
-        ssem = $4
-        where username = $5
-    `;
+        // Update the student details in the database
+        const query = 'UPDATE student SET sname = $1, semail = $2, sdept = $3, ssem = $4 WHERE username = $5';
+        await pool.query(query, [name, email, department, sem, username]);
 
-    /*const cabinSql = `
-        UPDATE cabin
-        SET fcabinno = $1, fblock = $2, ffloor = $3
-        WHERE fid = $4
-    `;*/
+        // Fetch the updated student details from the database
+        const updatedQuery = 'SELECT * FROM student WHERE username = $1';
+        const { rows } = await pool.query(updatedQuery, [username]);
 
-    pool.query(facultySql, [name, email, department, sem, username], (err1, result1) => {
-        if (err1) {
-            console.error('Error updating faculty details:', err1);
-            res.status(500).json({ error: 'Error updating faculty details' });
-        } /*else {
-            pool.query(cabinSql, [cabin, block,floor, facultyId], (err2, result2) => {
-                if (err2) {
-                    console.error('Error updating cabin details:', err2);
-                    res.status(500).json({ error: 'Error updating cabin details' });
-                } else {
-                    console.log('Faculty and cabin details updated successfully');
-                    res.json({ message: 'Faculty and cabin details updated successfully' });
-                }*/
-            });
-        });
+        // Send the updated student details as a response
+        if (rows.length > 0) {
+            res.json(rows[0]);
+        } else {
+            res.status(404).json({ error: 'Student not found' });
+        }
+    } catch (error) {
+        console.error('Error updating student details:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 
 app.get('/get-faculty-details', (req, res) => {
     const facultyId = req.query.facultyId;

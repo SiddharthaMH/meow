@@ -17,13 +17,13 @@
     <nav class="sidebar">
       <ul>
         
-        <li><a id="finsertLink" href="#"><i class="fas fa-user-plus"></i></a></li>
-        <li><a href="#" class="notification-btn"><i class="fas fa-bell"></i></a></li>
-        <li><a id="fmessagesLink" href="#"><i class="fas fa-envelope"></i></a></li>
+        <li data-label="INSERT"><a id="finsertLink" href="#"><i class="fas fa-user-plus"></i></a></li>
+        <li data-label="ALERT"><a href="#" class="notification-btn"><i class="fas fa-bell"></i></a></li>
+        <li data-label="INBOX"><a id="fmessagesLink" href="#"><i class="fas fa-envelope"></i></a></li>
 
       </div>
-        <li><a href="fsearch.html"><i class="fas fa-search"></i></a></li>
-        <li><a href="studentaboutus.html"><i class="fas fa-info-circle"></i></a></li>
+        <li data-label="QUERY"><a href="fsearch.html"><i class="fas fa-search"></i></a></li>
+        <li data-label="BLOG"><a href="studentaboutus.html"><i class="fas fa-info-circle"></i></a></li>
         
       </ul>
       <div class="professor-icon">
@@ -73,6 +73,7 @@
 
         <!-- Button to trigger update -->
         <button id="openModalBtn">Update </button>
+        
 
   
     <div id="updateModal" class="modal">
