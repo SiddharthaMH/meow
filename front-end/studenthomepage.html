@@ -18,7 +18,8 @@
             <li data-label="HOME"><a href="#"><i class="fas fa-home"></i></a></li>
             <li data-label="ALERT"><a href="#" class="notification-btn"><i class="fas fa-bell"></i></a></li>
             <li data-label="SEARCH"><a href="search.html" id="searchLink"><i class="fas fa-search"></i></a></li>
-            <li data-label="ALERT"><a href="#" class="notification-btn"><i class="fas fa-bell"></i></a></li>
+            <li data-label="INBOX"><a id="messagesLink" href="#"><i class="fas fa-envelope"></i></a></li>
+            
         </ul>
         
         <div class="professor-icon">
@@ -51,7 +52,15 @@
         </div>
         <button id="openModalBtn">Update Details</button>
         <button id="extraBtn">AVAILABLE</button>
-        <button id="extra1Btn">AVAILABLE</button>
+        <div class="dropdown">
+            
+            <select id="extraDropdown" name="extraDropdown">
+                <option value="ES">ES</option>
+                <option value="CN">CN</option>
+                <option value="DBS">DBS</option>
+            </select>
+        </div>
+        <button id="extra1Btn">SEARCH</button>
         <div id="updateModal" class="modal">
             <div class="modal-content">
                 <!-- Form for updating student details -->
@@ -90,14 +99,18 @@
 
     <!-- JavaScript for logout and fetching student details -->
     <script>
+        document.getElementById('extra1Btn').addEventListener('click', function() {
+    // Get the selected value from the dropdown
+    const selectedValue = document.getElementById('extraDropdown').value;
+    // Redirect to the display page with the selected value as a query parameter
+    window.location.href = `displayquery.html?subject=${selectedValue}`;
+});
+
         document.getElementById('extraBtn').addEventListener('click', function() {
             // Redirect to the display page
             window.location.href = 'displaylive.html';
         });
-        document.getElementById('extra1Btn').addEventListener('click', function() {
-            // Redirect to the display page
-            window.location.href = 'displaylive.html';
-        });
+       
         const openModalBtn = document.getElementById('openModalBtn');
         const updateModal = document.getElementById('updateModal');
         const closeModalBtn = document.querySelector('.close');
@@ -161,6 +174,17 @@
             searchLink.href = `search.html?username=${encodeURIComponent(username)}`;
         });
 
+
+
+        const urlParams = new URLSearchParams(window.location.search);
+            const username = urlParams.get('username');
+
+        const messagesUrl = `messages.html?username=${username}`;
+        console.log(messagesUrl); 
+document.getElementById('messagesLink').href = messagesUrl;
+        
+        
+        
         function fetchStudentDetails(username) {
             fetch(`http://localhost:5003/get-student-details?student=${username}`)
                 .then(response => {
@@ -216,6 +240,7 @@
                 });
             });
         });
+        
     </script>
 </body>
 </html>

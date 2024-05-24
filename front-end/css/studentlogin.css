@@ -1,13 +1,14 @@
 
 body {
   min-height: 99vh;
-  background: rgb(70, 218, 158);
+  background: rgb(16, 28, 31);
   
   overflow: hidden;
 }
 @font-face {
   font-family:'A1' ;
   src: url('/front-end/fonts/Dune_Rise.ttf') format('truetype');
+  
 }
   .menu-bar {
     display: flex;
@@ -37,7 +38,7 @@ body {
   
   .menu-bar ul li a {
     display: block;
-    color: #fffcfc;
+    color: #fefefe;
     text-decoration: none;
     font-size: 2vh;
     position: relative;
@@ -134,23 +135,28 @@ body {
 
 .title1
 {
-  color: white;
-  padding-top: 10px;
+  font-family: 'A1';
+  color: #ffffff;
+  padding-top: -40px;
   width: 70%;
-  font-size: 52px;
+  font-size: 55px;
+  
+
 }
 
-.container{
+.xyz{
   display: flex;
-  align-items: center;
-  justify-content: center;
+}
+.container{
+  position: absolute;
+  margin-left: 900px;
 }
 
 .wrapper {
   position: relative;
   width: 400px;
   height: 100%;
-  border: 2px solid black;
+  border: 2px solid rgb(255, 250, 250);
   border-radius: 20px;
   backdrop-filter: blur(20px);
   display: flex;
@@ -160,18 +166,10 @@ body {
   overflow: hidden;
 }
 
-
-.title1{
-  background: linear-gradient(to right, #ff0000, #00ff00, #0000ff, #ffffff, #050500);
-  /* Change colors as needed */
-  background-size: 500% 100%;
-  /* Adjust size based on the number of colors */
-  animation: colorChange 10s linear infinite;
-  /* Change the duration (5s) and timing function as needed */
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  font-weight: bold;
-  text-align: center;
-  margin-left: 0px;
+.image {
+  position: absolute;
+  border-radius: 50%;
+  width: 30px; /* Adjust the width as desired */
+  height: 30px; /* Adjust the height as desired */
 }
+

@@ -213,19 +213,48 @@ app.get('/get-all-live',async (req,res)=>{
     }
 }),
 
-app.get('/get-faculties-one-subject/:subject', async (req, res) => {
+app.get('/get-faculties-one-subject', async (req, res) => {
     try {
-        const { subject } = req.params;
+        const { subject } = req.query;
 
-        // Assuming you have a table named 'faculty_classes' that links faculties to classes
-        const query = await pool.query('SELECT fname,section FROM subject WHERE subject = $1', [subject]);
+        // Assuming 'fid' is the common column between 'faculty' and 'subject' tables
+        const query = await pool.query('SELECT f.fname, s.section FROM faculty f INNER JOIN subject s ON f.fid = s.fid WHERE s.subject = $1', [subject]);
 
         res.json(query.rows);
     } catch (error) {
-        console.error('Error fetching faculties teaching class:', error);
+        console.error('Error fetching faculties teaching subject:', error);
         res.status(500).json({ success: false, error: 'Internal Server Error' });
     }
-});
+}),
+
+
+
+app.get('/get-sub-sec', async (req, res) => {
+    try {
+        const { subject, section } = req.query;
+
+        // Retrieve live status and cabin details from the database for the specified subject and section
+        const result = await pool.query(`
+            SELECT f.fname, f.femail, f.fdept, f.live_status, c.fblock, c.ffloor, c.fcabinno
+            FROM faculty f
+            JOIN cabin c ON f.fid = c.fid
+            JOIN subject s ON f.fid = s.fid
+            WHERE s.subject = $1 AND s.section = $2
+        `, [subject, section]);
+
+        if (result.rows.length === 0) {
+            // No matching records found
+            return res.status(404).json({ error: 'No matching records found' });
+        }
+
+        const { fname, femail, fdept, live_status, fblock, ffloor, fcabinno } = result.rows[0];
+        res.status(200).json({ fname, femail, fdept, live_status, fblock, ffloor, fcabinno });
+    } catch (error) {
+        console.error('Error retrieving live status:', error.message);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+}),
+
 
 
 
@@ -259,6 +288,50 @@ app.post('/store-comment', async (req, res) => {
     }
 }),
 
+app.get('/faculty-comments', async (req, res) => {
+    try {
+        const { username } = req.query;
+
+        // Query to fetch comments with faculty name by username
+        const query = `
+            SELECT fr.reply, f.fname AS faculty_name, fr.create_at
+            FROM faculty_reply fr
+            INNER JOIN faculty f ON fr.fid = f.fid
+            WHERE fr.username = $1`;
+        const result = await pool.query(query, [username]);
+
+        res.json(result.rows); // Send the comments with faculty name as JSON response
+    } catch (error) {
+        console.error('Error fetching comments:', error);
+        res.status(500).json({ error: 'Internal Server Error' }); // Handle errors
+    }
+}),
+
+
+app.post('/store-faculty-reply', async (req, res) => {
+    try {
+        console.log("function");
+        const { username, reply, facultyId } = req.body;
+
+        // Retrieve faculty ID (fid) based on the provided facultyName
+       
+
+        // Check if the facultyName exists
+
+        //const facultyId = facultyIdQuery.rows[0].fid;
+
+        // Store the comment in the database
+        const result = await pool.query(
+            'INSERT INTO faculty_reply (username, reply, fid) VALUES ($1, $2, $3)',
+            [username, reply, facultyId]
+        );
+
+        res.status(200).json({ success: true, message: 'Comment stored successfully.' });
+    } catch (error) {
+        console.error('Error storing comment:', error);
+        res.status(500).json({ success: false, error: 'Internal Server Error' });
+    }
+}),
   
   app.get('/get-comments', async (req, res) => {
     try {
@@ -276,6 +349,9 @@ app.post('/store-comment', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 }),
+
+
+
 app.get('/get-faculty-id', async (req, res) => {
     try {
         //console.log("inside get-faculty-id");

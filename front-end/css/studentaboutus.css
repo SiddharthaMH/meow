@@ -1,19 +1,24 @@
 
 body {
     min-height: 99vh;
-    background: rgb(253, 219, 218);
-    background: linear-gradient(0deg, rgb(0, 0, 0) 20%, rgb(216 145 17) 58%, rgb(136 23 23) 98%);
+    background: rgb(16, 28, 31);
     
 }
 @font-face {
     font-family:'A1' ;
     src: url('/front-end/fonts/Dune_Rise.ttf') format('truetype');
   }
+
+
 .header{
     font-family: 'A1';
-    font-size: 25px;
-
-}
+    position:relative;
+    font-weight: 1000;
+    font-size: 27px;
+    color: #f8f8f8;
+    top: 10px;
+  
+  }
 .menu-bar {
     position: fixed;
     font-family: 'A1';
@@ -54,7 +59,7 @@ body {
 
 .menu-bar ul li a {
     display: block;
-    color: #fffcfc;
+    color: #ffffff;
     text-decoration: none;
     padding: 2vh 3vw; /* Adjust padding using relative units */
     font-size: 2vh; /* Adjust font size using relative units */
@@ -71,7 +76,7 @@ body {
 }
 
 .phone {
-    color: #fffcff;
+    color: #ffe6e6;
     font-size: 2vh; /* Adjust font size using relative units */
 }
 
@@ -144,7 +149,7 @@ body {
 
 #team-section {
     max-width: 100vw; /* Adjust max-width using relative units */
-    margin-top: 2vh; /* Adjust margin-top using relative units */
+    margin-top: 10vh; /* Adjust margin-top using relative units */
 }
 
 .team-member {
@@ -171,7 +176,7 @@ body {
  p {
     font-size: 16px; /* Set the font size */
     line-height: 1.5; /* Set the line height */
-    color: #ffffff; /* Set the text color */
+    color: peachpuff; /* Set the text color */
     margin-bottom: 20px;
     margin-left: 20%;
     margin-right: 20%; /* Set the bottom margin */
@@ -188,7 +193,7 @@ body {
     background-color: #c2777700;
     padding: 2vh;
     font-size:33px;
-    color: #fff5f5;
+    color: #fffdfd;
     text-align: center;
     margin: 2vh auto; /* Adjust margin using relative units */
 }
@@ -208,7 +213,7 @@ body {
 }
 
 .social-icons li a {
-    color: #cdc9c9;
+    color: #ffffff;
     text-decoration: none;
     display: block;
 }

@@ -3,7 +3,7 @@
 
 body {
   min-height: 99vh;
-  background: rgb(152, 137, 26);
+  background: rgb(16, 28, 31);
  
   overflow: hidden;
 }
@@ -51,7 +51,7 @@ header {
   
   .menu-bar ul li a {
     display: block;
-    color: #fffcfc;
+    color: #ffffff;
     text-decoration: none;
     font-size: 2vh;
     position: relative;
@@ -111,7 +111,7 @@ header {
     position:relative;
     font-weight: 1000;
     font-size: 129px;
-    color: #050a3f;
+    color: #fbfbff;
     top: 100px;
   
   }
@@ -119,8 +119,8 @@ header {
     font-family: Georgia, 'Times New Roman', Times, serif;
     position:relative;
     font-weight: 400;
-    font-size: 49px;
-    color: #000203;
+    font-size: 29px;
+    color: #ffffff;
     top: 200px;
     left: 200px;
   

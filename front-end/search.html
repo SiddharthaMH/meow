@@ -81,8 +81,8 @@
             <button type="submit"><i class="fas fa-search"></i></button>
         </form>
         <br>
-			<a class="forgot" href="forgot_pas.html">Don't know Name<br>😂</a> <!-- Link to Forgot Password page -->
-			<br>
+		<a class="forgot" href="forgot.html" id="forgotLink">Don't know Name<br>😂</a> <!-- Link to Forgot Password page -->
+
 		</div>
     </div>
 </div>
@@ -103,6 +103,19 @@
             // Redirect to display page with selected faculty name
             window.location.href = `display.html?facultyName=${encodeURIComponent(professorName)}&username=${encodeURIComponent(username)}`;
         });
+		document.addEventListener('DOMContentLoaded', function() {
+    // Get the username parameter from the URL
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const username = urlParams.get('username');
+
+    // Get the "Don't know Name" link
+    const forgotLink = document.getElementById('forgotLink');
+
+    // Update the href attribute of the link to include the username parameter
+    forgotLink.href = `forgot.html?username=${encodeURIComponent(username)}`;
+});
+
     </script>
 <!-- Code injected by live-server -->
 <script>

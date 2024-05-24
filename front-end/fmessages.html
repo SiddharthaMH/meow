@@ -33,8 +33,6 @@
             <th>USERNAME</th>
             <th>COMMENT</th>
             <th>RECEIVED AT</th>
-            <th>REPLY</th>
-            
         </tr>
     </thead>
     <tbody id="commentTableBody">
@@ -44,28 +42,35 @@
 </div>
 
 <div class="findmyprofessor">
-    <p>&copy; 2024 FindMyProfessor</p>
-  </div>
+    <p>REPLY</p>
+</div>
 
-    <!-- Notification Tab -->
-    <div id="notificationTab" class="notificationTab">
-        <span class="close">&times;</span>
-        
+<!-- Notification Tab -->
+<div id="notificationTab" class="notificationTab">
+    <span class="close">&times;</span>
+</div>
+
+<!-- Reply Section -->
+<div class="reply-section">
+    <div id="replyForm" style=" text-align: center;">
+       
+       
+        <textarea id="to" rows="4" cols="50" style="margin-bottom: 10px;" placeholder="TO:"></textarea><br>
+        <textarea id="comment" rows="4" cols="50" style="margin-bottom: 10px;" placeholder="Enter your reply..."></textarea><br>
+        <button class="submitreply" style="background-color: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease;">Submit Reply</button>
     </div>
-    <div id="replyModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Reply to Message</h2>
-            <textarea id="replyMessage" rows="4" cols="50" placeholder="Enter your reply..."></textarea>
-            <button id="submitReply">Submit Reply</button>
-        </div>
-    </div>
+</div>
+
 
 <script>
     const logoutBtn = document.querySelector('.logout-btn');
     const notificationBtn = document.querySelector('.notification-btn');
     const notificationTab = document.querySelector('.notificationTab');
     const closeBtn = document.querySelector('.close');
+    const replyBtn = document.querySelector('.reply-btn');
+    const replyForm = document.getElementById('replyForm');
+    const submitReplyBtn = document.getElementById('submitReply');
+
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const facultyId = urlParams.get('facultyId');
@@ -73,6 +78,7 @@
 
     // Now you can use the facultyId in your JavaScript code as needed
     console.log(facultyId);
+
     notificationBtn.addEventListener('click', (event) => {
         event.stopPropagation();
         const rect = notificationBtn.getBoundingClientRect();
@@ -91,76 +97,19 @@
         notificationTab.style.display = 'none';
     });
 
-    window.addEventListener('click', (event) => {
-        if (!event.target.closest('.notificationTab') && event.target !== notificationBtn) {
-            notificationTab.style.display = 'none';
-        }
+    logoutBtn.addEventListener('click', () => {
+        window.location.href = 'facultylogin.html';
     });
-    document.addEventListener('DOMContentLoaded', function() {
-        // Get the logout button element
-        const logoutBtn = document.getElementById('logoutBtn');
 
-        // Add event listener to the logout button
-        logoutBtn.addEventListener('click', function() {
-            // Redirect to the logout page when the button is clicked
-            window.location.href = 'facultylogin.html'; // Replace 'logout.html' with the URL of your logout page
-        });
-    });
+   
+
+   
 
     document.addEventListener('DOMContentLoaded', function() {
         const urlParams = new URLSearchParams(window.location.search);
         const facultyId = urlParams.get('facultyId');
         const facultyName = urlParams.get('facultyName');
         console.log(facultyId);
-
-        // Function to handle replying to messages
-        function replyToMessage(username, message) {
-            console.log('Reply to message function called'); 
-            // Display the reply modal
-            const replyModal = document.getElementById('replyModal');
-    replyModal.style.display = 'block';
-    console.log('Reply modal displayed'); // Add this line to check if the function is called
-
-    // Set event listener for closing the modal
-    const closeModal = document.querySelector('.close');
-    closeModal.onclick = () => {
-        replyModal.style.display = 'none';
-    };
-
-            // Set event listener for submitting the reply
-            const submitReplyBtn = document.getElementById('submitReply');
-            submitReplyBtn.onclick = () => {
-                const replyMessage = document.getElementById('replyMessage').value;
-                if (replyMessage.trim() !== '') {
-                    // Send the reply data to the backend
-                    fetch('http://localhost:5003/submit-reply', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ facultyId, facultyName, reply: replyMessage, username, originalMessage: message })
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        // Handle response if needed
-                        console.log('Reply submitted successfully:', data);
-                        // Close the modal after submitting the reply
-                        replyModal.style.display = 'none';
-                    })
-                    .catch(error => {
-                        console.error('Error submitting reply:', error);
-                        // Handle error if needed
-                    });
-                } else {
-                    alert('Please enter a reply message.');
-                }
-            };
-        }
 
         // Fetch faculty details from the backend
         const updateComments = () => {
@@ -180,21 +129,8 @@
                             <td>${comment.username}</td>
                             <td>${comment.comment}</td>
                             <td>${comment.created_at}</td>
-                            <td><button class="reply-btn">Reply</button></td>
                         `;
                         commentTableBody.appendChild(row);
-                    });
-
-                    // Add event listeners to reply buttons
-                    const replyButtons = document.querySelectorAll('.reply-btn');
-                    replyButtons.forEach(replyButton => {
-                        replyButton.addEventListener('click', () => {
-                            console.log('Reply button clicked'); 
-                            // Get the username and message for the selected row
-                            const username = replyButton.parentElement.parentElement.cells[0].textContent;
-                            const message = replyButton.parentElement.parentElement.cells[1].textContent;
-                            replyToMessage(username, message);
-                        });
                     });
                 })
                 .catch(error => {
@@ -207,7 +143,53 @@
         // Update comments every 0.1 seconds
         setInterval(updateComments, 100);
     });
+    document.addEventListener('DOMContentLoaded', function() {
+    // Other code...
+
+    const submitReplyBtn = document.querySelector('.submitreply');
+    submitReplyBtn.addEventListener('click', submitreply);
+});
+    function submitreply() {
+    // Get username and professor name from URL
+    const urlParams = new URLSearchParams(window.location.search);
+        const facultyId = urlParams.get('facultyId');
+
+    // Get comment from the form
+    const comment = document.getElementById('comment').value;
+    const username = document.getElementById('to').value;
+
+
+    // Create an object with the comment data
+    const commentData = {
+        username: username,
+        reply: comment,
+        facultyId:facultyId
+    };
+
+    // Send the comment data to the backend
+    fetch('http://localhost:5003/store-faculty-reply', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(commentData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data); // Log success message
+        // Optionally, display a success message to the user
+    })
+    .catch(error => {
+        console.error('Error storing comment:', error);
+        // Optionally, display an error message to the user
+    });
+}
+
 </script>
+</body>
 </html>
-
-

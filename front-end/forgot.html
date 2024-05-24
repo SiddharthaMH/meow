@@ -1,60 +1,64 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Input Fields</title>
     <link rel="stylesheet" href="css/forgot.css">
+    <title>Dropdown Form</title>
 </head>
 <body>
-    <div class="menu-bar">
-        <ul>
-            <li><a href="mainwebpage.html">Home</a></li>
-            <li><a href="aboutus.html">About us</a></li>
-            <li><a href="login.html">Management</a></li>
-            <li class="dropdown">
-                <a href="#" class="contact-link">Get In Touch</a>
-                <div class="dropdown-content">
-                    <div class="dropdown-content">
-                        <a href="mailto:amrithshet@icloud.com">Email: amrithshet@icloud.com</a>
-                        <p class="phone">Phone: +91 6363531509</p>
-                        <a href="https://maps.app.goo.gl/hfHu8WZr4VwQta9r6">Address: Mangaluru, Karnataka
-                            575002</a>
-                    </div>
-            </li>
-        </ul>
-    </div>
-
-    <h2>
-        LOCATE YOUR PROFESSOR
-    </h2>
-
-    <form class="formbox">
+    <form class="formbox" id="myForm">
         <div class="subject">
             <label for="subjectSelect">SUBJECT</label>
             <select id="subjectSelect" name="subjectSelect">
-                
                 <option value="DBS">DBS</option>
                 <option value="DAA">DAA</option>
                 <option value="CN">CN</option>
+                <option value="ES">ES</option>
+                <option value="DBMS">DBMS</option>
+                <option value="CNP">CNP</option>
+                <option value="OS">OS</option>
+                <option value="SDT">SDT</option>
             </select>
         </div>
         <div class="section">
             <label for="sectionSelect">SECTION</label>
             <select id="sectionSelect" name="sectionSelect">
-                <option value="ITA">ITA</option>
-                <option value="ITB">ITB</option>
-                <option value="ITC">ITC</option>
-                <option value="CCEA">CCEA</option>
-                <option value="CCEB">CCEB</option>
-                <option value="CCEC">CCEC</option>
+                <option value="IT A">ITA</option>
+                <option value="IT B">ITB</option>
+                <option value="IT C">ITC</option>
+                <option value="CCE A">CCEA</option>
+                <option value="CCE B">CCEB</option>
+                <option value="CCE C">CCEC</option>
             </select>
         </div>
-        
-        
         <button type="submit">Submit</button>
     </form>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get the form element
+            const form = document.getElementById('myForm');
+
+            // Add event listener for form submission
+            form.addEventListener('submit', function(event) {
+                // Prevent the default form submission behavior
+                event.preventDefault();
+                const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const username = urlParams.get('username');
+                // Get the selected values from the dropdowns
+                const subject = document.getElementById('subjectSelect').value;
+                const section = document.getElementById('sectionSelect').value;
+
+                // Construct the URL with query parameters
+                const url = `displayforgot.html?subject=${subject}&section=${section}&username=${username}`;
+
+                // Redirect to the other page with the selected values as query parameters
+                window.location.href = url;
+            });
+        });
+    </script>
 </body>
 </html>
